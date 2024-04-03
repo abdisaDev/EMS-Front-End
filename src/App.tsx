@@ -1,7 +1,12 @@
+import { Alert } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { AlertDemo } from "./components/test";
 function App() {
   return (
     <>
-      <h1>Hello Word</h1>
+      <div>
+        <AlertDemo />
+      </div>
     </>
   );
 }
