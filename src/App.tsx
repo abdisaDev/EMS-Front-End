@@ -1,8 +1,10 @@
+import RegistrationForm from "./components/registrationForm/RegistrationForm";
+
 function App() {
   return (
     <>
-      <div>
-        <h1>Hello World</h1>
+      <div className="flex justify-center">
+        <RegistrationForm />
       </div>
     </>
   );
