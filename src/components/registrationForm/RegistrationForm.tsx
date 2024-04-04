@@ -1,7 +1,16 @@
+// react
+import * as React from "react";
+
+// validation
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+// Form Handler
 import { useForm } from "react-hook-form";
+
+// Shadcn Components
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -20,7 +29,12 @@ import {
   SelectLabel,
   SelectGroup,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+
+// icons
+import { KeyRound } from "lucide-react";
+
+// custom component
+import { OtpDialog } from "@/components/otpDialog/OtpDialog";
 
 enum Role {
   STUDENT = "Student",
@@ -32,12 +46,15 @@ const formSchema = z.object({
   last_name: z.string().min(3).max(50),
   username: z.string().min(5, "This message is fun").max(15),
   role: z.nativeEnum(Role),
+  items: z.string(),
   phone_number: z.number().min(9).max(10),
   verfication_code: z.number().min(6).max(6),
   password: z.string().min(8).max(20),
 });
 
 export default function RegistrationForm() {
+  const [showOtpDialog, setShowOtpDialog] = React.useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,108 +68,156 @@ export default function RegistrationForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 
+  function showOtpDialogHandler() {
+    setShowOtpDialog(!showOtpDialog);
+  }
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-4/12">
-        <div className="flex">
-          <FormField
-            control={form.control}
-            name="first_name"
-            render={({ field }) => (
-              <FormItem className="w-6/12">
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Abdisa" {...field} />
-                </FormControl>
-                {/* <FormDescription>
+    <>
+      {/* <OtpDialog /> */}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-5 5/12 md:w-4/12 "
+        >
+          <div className="flex justify-between">
+            <div className="w-[48%]">
+              <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Abdisa" {...field} />
+                    </FormControl>
+                    {/* <FormDescription>
                 This is your public display name.
               </FormDescription> */}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="last_name"
-            render={({ field }) => (
-              <FormItem className="w-6/12">
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Alemu" {...field} />
-                </FormControl>
-                {/* <FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="w-[48%]">
+              <FormField
+                control={form.control}
+                name="last_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Alemu" {...field} />
+                    </FormControl>
+                    {/* <FormDescription>
                 This is your public display name.
               </FormDescription> */}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div>
-          <FormField
-            name="role"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem className="w-6/12">
-                <FormLabel>Role</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Roles</SelectLabel>
-                        <SelectItem value="Student">Student</SelectItem>
-                        <SelectItem value="Lecturer">Lecuturer</SelectItem>
-                        <SelectItem value="Employee">Employee</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </div>
-        <div>
-          <FormField
-            name="role"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem className="w-6/12">
-                <FormLabel>Items</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Items</SelectLabel>
-                        <SelectItem value="Student">Student</SelectItem>
-                        <SelectItem value="Lecturer">Lecuturer</SelectItem>
-                        <SelectItem value="Employee">Employee</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </div>
-        <Button type="submit">Register</Button>
-      </form>
-    </Form>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div className="w-[48%]">
+              <FormField
+                name="role"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Role</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Roles</SelectLabel>
+                            <SelectItem value="Student">Student</SelectItem>
+                            <SelectItem value="Lecturer">Lecuturer</SelectItem>
+                            <SelectItem value="Employee">Employee</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="w-[48%]">
+              <FormField
+                name="items"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Items</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Item" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Items</SelectLabel>
+                            <SelectItem value="Student">Student</SelectItem>
+                            <SelectItem value="Lecturer">Lecuturer</SelectItem>
+                            <SelectItem value="Employee">Employee</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div className="w-[48%]">
+              <FormField
+                control={form.control}
+                name="phone_number"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="9123 * * * "
+                        {...field}
+                        type="number"
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
+                This is your public display name.
+              </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex items-end w-[48%]">
+              <Button
+                type="button"
+                className="w-full"
+                onClick={showOtpDialogHandler}
+              >
+                Get Code &nbsp; <KeyRound size={15} />
+              </Button>
+            </div>
+          </div>
+          <Button type="submit" className="w-full">
+            Register
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 }
