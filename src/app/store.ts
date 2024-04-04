@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import showOtpDialogReducer from "@/components/otpDialog/showOtpSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    showOtpDialog: showOtpDialogReducer,
+  },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

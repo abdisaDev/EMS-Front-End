@@ -1,3 +1,6 @@
+import * as React from "react";
+
+// shadcn ui components
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,20 +12,25 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 
-export function OtpDialog() {
+// custom components
+import { OtpField } from "../otpField/otpField";
+
+export function OtpDialog(props: {
+  dialogTrigerElement:
+    | React.ReactElement<unknown, string | React.JSXElementConstructor<unknown>>
+    | undefined;
+}) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Show Dialog</Button>
+        {props.dialogTrigerElement}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+          <AlertDialogTitle>Verify Your Phone Number</AlertDialogTitle>
+          <AlertDialogDescription className="flex justify-center">
+            <OtpField />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
