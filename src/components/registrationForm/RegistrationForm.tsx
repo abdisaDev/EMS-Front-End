@@ -33,8 +33,6 @@ import {
 // icons
 import { KeyRound } from "lucide-react";
 
-// toogle-dark-mode
-import { ModeToggle } from "@/components/theme/mode-toggle";
 // redux-toolkit
 import type { RootState } from "@/app/store";
 import { useSelector, useDispatch } from "react-redux";
