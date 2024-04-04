@@ -1,6 +1,3 @@
-// react
-import * as React from "react";
-
 // validation
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -33,11 +29,8 @@ import {
 // icons
 import { KeyRound } from "lucide-react";
 
-// toogle-dark-mode
-import { ModeToggle } from "@/components/theme/mode-toggle";
 // redux-toolkit
-import type { RootState } from "@/app/store";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // custom component
 import { OtpDialog } from "@/components/otpDialog/OtpDialog";
@@ -61,9 +54,6 @@ const formSchema = z.object({
 });
 
 export default function RegistrationForm() {
-  const isOptDisplayed = useSelector(
-    (state: RootState) => state.showOtpDialog.value
-  );
   const dispatch = useDispatch();
 
   const form = useForm<z.infer<typeof formSchema>>({
