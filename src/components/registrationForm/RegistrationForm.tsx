@@ -35,6 +35,7 @@ import { useDispatch } from "react-redux";
 // custom component
 import { OtpDialog } from "@/components/otpDialog/OtpDialog";
 import { show } from "../otpDialog/showOtpSlice";
+import { ModeToggle } from "../theme/mode-toggle";
 
 enum Role {
   STUDENT = "Student",
@@ -78,8 +79,11 @@ export default function RegistrationForm() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-5 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 py-3 px-4 rounded-lg bg-[#f7f7f7]"
+            className="relative space-y-5 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 py-3 px-4 rounded-lg bg-[#f7f7f7]"
           >
+            <div className="absolute top-5 right-5">
+              <ModeToggle />
+            </div>
             <p className="text-center font-black text-2xl text-[#0f172a]">
               Sign Up
             </p>
