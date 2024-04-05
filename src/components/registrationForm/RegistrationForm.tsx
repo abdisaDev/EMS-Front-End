@@ -273,18 +273,23 @@ export default function RegistrationForm() {
                 )}
               />
             </div>
-            <div className="items-top flex space-x-2">
-              <Checkbox id="terms1" />
-              <div className="grid gap-1.5 leading-none">
-                <label
-                  htmlFor="terms1"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Accept terms and conditions
-                </label>
-                <p className="text-sm text-muted-foreground">
-                  You agree to our Terms of Service and Privacy Policy.
-                </p>
+            <div className="flex space-x-5 justify-between">
+              <div className="items-top flex space-x-2">
+                <Checkbox id="terms1" />
+                <div className="grid gap-1.5 leading-none">
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Accept terms and conditions
+                  </label>
+                  <p className="text-sm text-muted-foreground">
+                    You agree to our Terms of Service and Privacy Policy.
+                  </p>
+                </div>
+              </div>
+              <div className="text-sky-500 underline text-sm flex items-center">
+                <a href="#">Already a member?</a>
               </div>
             </div>
             <Button type="submit" className="w-full">
