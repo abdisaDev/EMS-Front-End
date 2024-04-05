@@ -76,7 +76,7 @@ export default function RegistrationForm() {
 
   return (
     <>
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-full h-screen flex justify-center items-center absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

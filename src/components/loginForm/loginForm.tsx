@@ -18,6 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 
+// react router
+import { Link } from "react-router-dom";
+
 const formSchema = z.object({
   phone_number: z.number().min(9).max(10),
   password: z.string().min(8).max(20),
@@ -27,7 +30,7 @@ function onSubmit(values: z.infer<typeof formSchema>) {
   console.log(values);
 }
 
-export function LoginForm() {
+export default function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,7 +40,7 @@ export function LoginForm() {
   });
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -95,12 +98,16 @@ export function LoginForm() {
               </label>
             </div>
             <div className="text-sky-500 underline text-sm flex items-center">
-              <a href="#">Forgot password?</a>
+              <Link to="#">Forgot password?</Link>
             </div>
           </div>
-          <Button type="submit" className="w-full">
-            Login
-          </Button>
+          <div>
+            <Link to="/login">
+              <Button type="submit" className="w-full">
+                Login
+              </Button>
+            </Link>
+          </div>
         </form>
       </Form>
     </div>
