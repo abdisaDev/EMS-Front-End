@@ -288,9 +288,6 @@ export default function RegistrationForm() {
                   </p>
                 </div>
               </div>
-              <div className="text-sky-500 underline text-sm flex items-center">
-                <a href="#">Already a member?</a>
-              </div>
             </div>
             <Button type="submit" className="w-full">
               Register
