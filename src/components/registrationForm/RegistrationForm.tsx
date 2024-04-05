@@ -63,7 +63,7 @@ export default function RegistrationForm() {
       first_name: "",
       last_name: "",
       username: "",
-      phone_number: 0,
+      phone_number: undefined,
       verfication_code: 0,
       password: "",
     },
