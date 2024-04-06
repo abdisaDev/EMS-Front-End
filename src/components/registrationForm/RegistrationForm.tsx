@@ -46,7 +46,6 @@ enum Role {
 const formSchema = z.object({
   first_name: z.string().min(3).max(50),
   last_name: z.string().min(3).max(50),
-  username: z.string().min(5, "This message is fun").max(15),
   role: z.nativeEnum(Role),
   items: z.string(),
   phone_number: z.number().min(9).max(10),
@@ -63,7 +62,6 @@ export default function RegistrationForm() {
     defaultValues: {
       first_name: "",
       last_name: "",
-      username: "",
       phone_number: undefined,
       verfication_code: 0,
       password: "",
