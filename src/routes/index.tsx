@@ -1,6 +1,7 @@
 import RegistrationForm from "@/components/registrationForm/RegistrationForm";
 import LoginForm from "@/components/loginForm/loginForm";
 import LandingPage from "@/components/landingPage";
+import QrCodeReader from "@/components/qrCodeReader/qrCodeReader";
 
 export const routes = [
   { path: "/", element: <LandingPage /> },
@@ -12,4 +13,5 @@ export const routes = [
     path: "/register",
     element: <RegistrationForm />,
   },
+  { path: "/verify-user", element: <QrCodeReader /> },
 ];
