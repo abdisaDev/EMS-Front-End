@@ -47,7 +47,7 @@ export default function QrCodeReader() {
           <div className="flex justify-center w-full ">
             <p className="animate-bounce animate-infinite">Scanning . . .</p>
           </div>
-          <h1>{qrResponse}</h1>
+          <h1>{qrResponse.text}</h1>
         </CardFooter>
       </Card>
     </div>
