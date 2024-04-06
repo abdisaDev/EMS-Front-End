@@ -18,7 +18,10 @@ export default function QrCodeReader() {
             <QrReader
               delay={100}
               className="rounded-2xl border-4 border-slate-400 animate-jump animate-infinite animate-ease-in"
-              facingMode="rear"
+              constraints={{
+                audio: false,
+                video: { facingMode: "environment" },
+              }}
             />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <img src={QrReaderBox} alt="Qr Reader Box" />
