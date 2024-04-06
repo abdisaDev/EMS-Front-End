@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Separator } from "@/components/ui/separator";
 
 // react router
 import { Link } from "react-router-dom";
@@ -107,6 +108,22 @@ export default function LoginForm() {
                 Login
               </Button>
             </Link>
+            <div>
+              <Separator className="my-4" />
+            </div>
+            <div className="flex justify-center">
+              <p className="w-1/2 text-center font-light	">
+                By clicking continue, you agree to our{" "}
+                <Link to="#" className="text-sky-500 underline">
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link to="#" className="text-sky-500 underline">
+                  Privacy Policy
+                </Link>
+                .
+              </p>
+            </div>
           </div>
         </form>
       </Form>
