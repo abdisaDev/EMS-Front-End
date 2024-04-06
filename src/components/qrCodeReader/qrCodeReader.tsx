@@ -11,9 +11,9 @@ import QrReaderBox from "@/assets/images/qrReaderBox.png";
 import { useState } from "react";
 
 export default function QrCodeReader() {
-  const [qrResponse, setQrResponse] = useState<unknown>();
+  const [qrResponse, setQrResponse] = useState<HTMLElement | any>();
 
-  const handleScanQrCode = (response: unknown) => {
+  const handleScanQrCode = (response: any) => {
     setQrResponse(response);
   };
 
