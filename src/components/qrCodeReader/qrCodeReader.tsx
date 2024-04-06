@@ -7,19 +7,22 @@ import {
 } from "@/components/ui/card";
 // @ts-expect-error -> the below package didn't have any declarations
 import QrReader from "react-qr-scanner";
+import QrReaderBox from "@/assets/images/qrReaderBox.svg";
 
 export default function QrCodeReader() {
   return (
-    <div className="flex justify-center items-center h-screen  ">
+    <div className="flex justify-center items-center h-screen">
       <Card>
         <CardHeader>
           <div className="relative">
             <QrReader
               delay={100}
               className="rounded-2xl border-4 border-slate-400 animate-jump animate-infinite animate-ease-in"
-              facingMode="environment"
+              facingMode="rear"
             />
-            <div className="absolute border-4  rounded-xl border-slate-400 w-1/2 h-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <img src={QrReaderBox} alt="Qr Reader Box" />
+            </div>
           </div>
         </CardHeader>
         <CardFooter className="flex flex-col space-y-4">
