@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 // @ts-expect-error -> the below package didn't have any declarations
 import QrReader from "react-qr-scanner";
-import QrReaderBox from "@/assets/images/qrReaderBox.svg";
+import QrReaderBox from "@/assets/images/qrReaderBox.png";
 
 export default function QrCodeReader() {
   return (
