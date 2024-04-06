@@ -24,7 +24,14 @@ export default function QrCodeReader() {
               }}
             />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <img src={QrReaderBox} alt="Qr Reader Box" />
+              <img
+                src={QrReaderBox}
+                alt="Qr Reader Box"
+                style={{
+                  height: "400px",
+                  width: "420px",
+                }}
+              />
             </div>
           </div>
         </CardHeader>
