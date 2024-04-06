@@ -10,10 +10,13 @@ import QrReader from "react-qr-scanner";
 import QrReaderBox from "@/assets/images/qrReaderBox.png";
 import { useState } from "react";
 
+type qrReponse = {
+  text: string;
+};
 export default function QrCodeReader() {
-  const [qrResponse, setQrResponse] = useState<HTMLElement | any>();
+  const [qrResponse, setQrResponse] = useState<qrReponse>({ text: "" });
 
-  const handleScanQrCode = (response: any) => {
+  const handleScanQrCode = (response: qrReponse) => {
     setQrResponse(response);
     console.log(response);
     console.log(qrResponse);
@@ -49,7 +52,7 @@ export default function QrCodeReader() {
           <div className="flex justify-center w-full ">
             <p className="animate-bounce animate-infinite">Scanning . . .</p>
           </div>
-          <h1>{qrResponse?.text}</h1>
+          <h1>{qrResponse.text}</h1>
         </CardFooter>
       </Card>
     </div>
