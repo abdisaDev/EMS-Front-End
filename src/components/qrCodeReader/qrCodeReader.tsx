@@ -8,8 +8,15 @@ import {
 // @ts-expect-error -> the below package didn't have any declarations
 import QrReader from "react-qr-scanner";
 import QrReaderBox from "@/assets/images/qrReaderBox.png";
+import { useState } from "react";
 
 export default function QrCodeReader() {
+  const [qrResponse, setQrResponse] = useState();
+
+  const handleScanQrCode = (response) => {
+    setQrResponse(response);
+  };
+
   return (
     <div className="flex justify-center items-center h-screen">
       <Card>
@@ -22,6 +29,8 @@ export default function QrCodeReader() {
                 audio: false,
                 video: { facingMode: "environment" },
               }}
+              onScan={handleScanQrCode}
+              onError={handleScanQrCode}
             />
             <div className="size-fit absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
               <img src={QrReaderBox} alt="Qr Reader Box" />
@@ -30,14 +39,15 @@ export default function QrCodeReader() {
         </CardHeader>
         <CardFooter className="flex flex-col space-y-4">
           <div>
-            <CardTitle>QR Code - Scan for details</CardTitle>
+            <CardTitle>One Moment.</CardTitle>
             <CardDescription>
-              Use your phone's camera to read the code.
+              Scanning the QR Code takes a few seconds.
             </CardDescription>
           </div>
           <div className="flex justify-center w-full ">
             <p className="animate-bounce animate-infinite">Scanning . . .</p>
           </div>
+          <h1>{qrResponse}</h1>
         </CardFooter>
       </Card>
     </div>
