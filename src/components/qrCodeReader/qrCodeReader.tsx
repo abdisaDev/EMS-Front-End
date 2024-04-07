@@ -39,7 +39,7 @@ export default function QrCodeReader() {
           <div className="relative ">
             <QrReader
               delay={100}
-              className="rounded-xl w-[400px] border-4 border-slate-400 "
+              className="rounded-xl border-4 border-slate-400 "
               constraints={{
                 audio: false,
                 video: { facingMode: "environment" },
