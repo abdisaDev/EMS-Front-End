@@ -13,6 +13,7 @@ import QrReader from "modern-react-qr-reader";
 
 import QrReaderBox from "@/assets/images/qrReaderBox.png";
 import { useState } from "react";
+import { Badge } from "../ui/badge";
 
 export default function QrCodeReader() {
   const { toast } = useToast();
@@ -38,7 +39,7 @@ export default function QrCodeReader() {
         <CardHeader>
           <div className="relative ">
             <QrReader
-              delay={100}
+              delay={300}
               className="rounded-xl border-4 border-slate-400 "
               constraints={{
                 audio: false,
@@ -56,20 +57,23 @@ export default function QrCodeReader() {
             </div>
           </div>
         </CardHeader>
-        <CardFooter className="flex flex-col space-y-4">
-          <div>
-            <CardTitle>One Moment.</CardTitle>
-            <CardDescription>
-              Scanning the QR Code takes a few seconds.
-            </CardDescription>
-          </div>
-          <div className="flex justify-center w-full ">
-            <p className="animate-bounce animate-infinite animate-ease-in animate-ease-out">
-              Scanning . . .
-            </p>
-          </div>
-          <h1>{qrResponse}</h1>
-        </CardFooter>
+
+        <Card>
+          <CardFooter className="flex flex-col space-y-4 pt-4">
+            <div>
+              <CardTitle>One Moment.</CardTitle>
+              <CardDescription>
+                Scanning the QR Code takes a few seconds.
+              </CardDescription>
+            </div>
+            <div className="flex justify-center w-full ">
+              <p className="animate-bounce animate-infinite animate-ease-in animate-ease-out">
+                <Badge>Scanning . . .</Badge>
+              </p>
+            </div>
+            <h1>{qrResponse}</h1>
+          </CardFooter>
+        </Card>
       </Card>
     </div>
   );
