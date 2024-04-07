@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { UserRoundPlus, Scan } from "lucide-react";
 
 // axios
 import axios from "axios";
@@ -57,9 +58,9 @@ export default function SecurityGuardHomePage() {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
-      <Card className="w-1/2 flex-col h-2/12 shadow-none">
+      <Card className="flex-col h-2/12 shadow-none w-10/12 sm:w-8/12 md:w-7/12 lg:w-6/12">
         <CardHeader className="justify-center space-y-2">
-          <CardTitle className="text-5xl bg-gradient-to-r from-slate-800 to-sky-500 text-transparent bg-clip-text">
+          <CardTitle className="text-4xl sm:text-4xl md:text-5xl lg:text-5xl bg-gradient-to-r from-slate-800 to-sky-500 text-transparent bg-clip-text">
             Hello, Abdisa
           </CardTitle>
           <Separator />
@@ -70,17 +71,25 @@ export default function SecurityGuardHomePage() {
         </CardHeader>
       </Card>
 
-      <div className="w-1/2 flex flex-col items-center justify-center space-y-2">
-        <div className="w-1/2">
+      <div className="w-10/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2">
+        <div className="w-10/12">
           <Link to="/verify-user">
             <Button className="w-full" variant="outline">
-              Scan QR Code
+              Scan QR Code &nbsp;&nbsp;
+              <div>
+                <Scan size={18} />
+              </div>
             </Button>
           </Link>
         </div>
-        <div className="w-1/2">
+        <div className="w-10/12">
           <Link to="/register">
-            <Button className="w-full">Register New User</Button>
+            <Button className="w-full">
+              Register New User &nbsp;&nbsp;{" "}
+              <div>
+                <UserRoundPlus size={18} />
+              </div>
+            </Button>
           </Link>
         </div>
       </div>
