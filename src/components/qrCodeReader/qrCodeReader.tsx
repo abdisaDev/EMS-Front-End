@@ -36,10 +36,10 @@ export default function QrCodeReader() {
     <div className="flex justify-center items-center h-screen">
       <Card>
         <CardHeader>
-          <div className="relative">
+          <div className="relative ">
             <QrReader
               delay={100}
-              className="rounded-2xl border-4 border-slate-400 animate-jump animate-infinite animate-ease-in"
+              className="rounded-xl w-[400px] border-4 border-slate-400 "
               constraints={{
                 audio: false,
                 video: { facingMode: "environment" },
@@ -47,8 +47,12 @@ export default function QrCodeReader() {
               onScan={handleScanQrCode}
               onError={handleScanQrCode}
             />
-            <div className="w-full h-full absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-              <img src={QrReaderBox} alt="Qr Reader Box" />
+            <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
+              <img
+                src={QrReaderBox}
+                alt="Qr Reader Box"
+                className="animate-jump animate-infinite animate-ease-in"
+              />
             </div>
           </div>
         </CardHeader>
@@ -60,7 +64,9 @@ export default function QrCodeReader() {
             </CardDescription>
           </div>
           <div className="flex justify-center w-full ">
-            <p className="animate-bounce animate-infinite">Scanning . . .</p>
+            <p className="animate-bounce animate-infinite animate-ease-in animate-ease-out">
+              Scanning . . .
+            </p>
           </div>
           <h1>{qrResponse}</h1>
         </CardFooter>
