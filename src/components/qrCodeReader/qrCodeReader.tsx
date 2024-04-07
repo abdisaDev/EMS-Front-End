@@ -14,6 +14,7 @@ import QrReader from "modern-react-qr-reader";
 import QrReaderBox from "@/assets/images/qrReaderBox.png";
 import { useState } from "react";
 import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 
 export default function QrCodeReader() {
   const { toast } = useToast();
@@ -37,10 +38,10 @@ export default function QrCodeReader() {
     <div className="flex justify-center items-center h-screen absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
       <Card>
         <CardHeader>
-          <div className="relative ">
+          <div className="relative">
             <QrReader
               delay={300}
-              className="rounded-xl border-4 border-slate-400 "
+              className="rounded-2xl border-8 border-slate-400 "
               constraints={{
                 audio: false,
                 video: { facingMode: "environment" },
@@ -52,18 +53,18 @@ export default function QrCodeReader() {
               <img
                 src={QrReaderBox}
                 alt="Qr Reader Box"
-                className="animate-jump animate-infinite animate-ease-in"
+                className="animate-pulse animate-infinite animate-ease-in"
               />
             </div>
           </div>
         </CardHeader>
 
-        <Card>
+        <Card className="shadow-sm border-2 rounded-t-xl border-slate-400">
           <CardFooter className="flex flex-col space-y-4 pt-4">
             <div>
-              <CardTitle>One Moment.</CardTitle>
+              <CardTitle>Analyzing QR code.</CardTitle>
               <CardDescription>
-                Scanning the QR Code takes a few seconds.
+                Decoding QR code. Please hold your device steady.
               </CardDescription>
             </div>
             <div className="flex justify-center w-full ">
@@ -71,7 +72,12 @@ export default function QrCodeReader() {
                 <Badge>Scanning . . .</Badge>
               </p>
             </div>
-            <h1>{qrResponse}</h1>
+            <div className="flex justify-end w-full space-x-2">
+              <Button variant="destructive" size="sm">
+                Cancel
+              </Button>
+              <Button size="sm">Verify</Button>
+            </div>
           </CardFooter>
         </Card>
       </Card>
