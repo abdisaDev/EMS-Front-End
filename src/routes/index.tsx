@@ -1,6 +1,6 @@
-import RegistrationForm from "@/components/registrationForm/RegistrationForm";
-import LoginForm from "@/components/loginForm/loginForm";
-import LandingPage from "@/components/landingPage";
+import RegistrationForm from "@/pages/registrationForm/RegistrationForm";
+import LoginForm from "@/pages/loginForm/loginForm";
+import LandingPage from "@/pages/landingPage";
 import QrCodeReader from "@/components/qrCodeReader/qrCodeReader";
 
 export const routes = [
