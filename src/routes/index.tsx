@@ -14,4 +14,5 @@ export const routes = [
     element: <RegistrationForm />,
   },
   { path: "/verify-user", element: <QrCodeReader /> },
+  { path: "/home", element: <QrCodeReader /> },
 ];
