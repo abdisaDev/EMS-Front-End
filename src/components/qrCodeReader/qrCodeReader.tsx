@@ -9,24 +9,20 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 
 // @ts-expect-error -> the below package didn't have any declarations
-import QrReader from "react-qr-scanner";
+import QrReader from "modern-react-qr-reader";
+
 import QrReaderBox from "@/assets/images/qrReaderBox.png";
 import { useState } from "react";
 
-type qrReponse = {
-  text: string;
-};
 export default function QrCodeReader() {
   const { toast } = useToast();
 
-  const [qrResponse, setQrResponse] = useState<qrReponse>({
-    text: "Can't Find Name!",
-  });
+  const [qrResponse, setQrResponse] = useState<string>("Can't Find Name!");
 
-  const handleScanQrCode = (response: qrReponse) => {
+  const handleScanQrCode = (response: string) => {
     if (response) {
       toast({
-        title: `QR Read Successfully - ${response?.text}`,
+        title: `QR Read Successfully - ${response}`,
         description: "Check the detail inforamation on . . . ",
         action: <ToastAction altText="Close Notification">Close</ToastAction>,
       });
@@ -66,7 +62,7 @@ export default function QrCodeReader() {
           <div className="flex justify-center w-full ">
             <p className="animate-bounce animate-infinite">Scanning . . .</p>
           </div>
-          <h1>{qrResponse?.text}</h1>
+          <h1>{qrResponse}</h1>
         </CardFooter>
       </Card>
     </div>
