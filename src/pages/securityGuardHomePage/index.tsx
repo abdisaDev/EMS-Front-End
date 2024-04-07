@@ -22,8 +22,8 @@ type dailyQuote = {
 
 export default function SecurityGuardHomePage() {
   const [dailyQuote, setDailyQuote] = useState<dailyQuote>({
-    author: "",
-    text: "",
+    author: "Abdisa Dev",
+    text: "Small steps, big journeys.",
   });
   const [allQuotes, setAllquotes] = useState([]);
   const [quoteCounter, setQuoteCounter] = useState(0);
@@ -55,15 +55,16 @@ export default function SecurityGuardHomePage() {
 
   const { text, author } = dailyQuote;
 
-  console.log(quoteCounter, allQuotes.length);
   return (
-    <div className="h-screen flex flex-col items-center justify-center space-y-2">
+    <div className="h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
       <Card className="w-1/2 flex-col h-2/12 shadow-none">
         <CardHeader className="justify-center space-y-2">
-          <CardTitle className="text-4xl">Hello, Abdisa</CardTitle>
+          <CardTitle className=" background-animate text-5xl bg-gradient-to-r from-slate-800 to-sky-500 text-transparent bg-clip-text">
+            Hello, Abdisa
+          </CardTitle>
           <Separator />
           <div className="flex flex-col items-end">
-            <CardDescription>{text}</CardDescription>
+            <CardDescription className="text-bold">"{text}"</CardDescription>
             <CardDescription> {`--- ${author.split(",")[0]}`}</CardDescription>
           </div>
         </CardHeader>
