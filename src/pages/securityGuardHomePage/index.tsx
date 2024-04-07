@@ -59,7 +59,7 @@ export default function SecurityGuardHomePage() {
     <div className="h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
       <Card className="w-1/2 flex-col h-2/12 shadow-none">
         <CardHeader className="justify-center space-y-2">
-          <CardTitle className=" background-animate text-5xl bg-gradient-to-r from-slate-800 to-sky-500 text-transparent bg-clip-text">
+          <CardTitle className="text-5xl bg-gradient-to-r from-slate-800 to-sky-500 text-transparent bg-clip-text">
             Hello, Abdisa
           </CardTitle>
           <Separator />
