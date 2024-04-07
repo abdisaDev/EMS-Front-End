@@ -35,8 +35,8 @@ import { useDispatch } from "react-redux";
 
 // custom component
 import { OtpDialog } from "@/components/otpDialog/OtpDialog";
-import { show } from "../otpDialog/showOtpSlice";
-import { ModeToggle } from "../theme/mode-toggle";
+import { show } from "@/components/otpDialog/showOtpSlice";
+import { ModeToggle } from "@/components/theme/mode-toggle";
 
 enum Role {
   STUDENT = "Student",
