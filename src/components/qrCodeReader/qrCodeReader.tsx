@@ -33,7 +33,7 @@ export default function QrCodeReader() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
       <Card>
         <CardHeader>
           <div className="relative ">
