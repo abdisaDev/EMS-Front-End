@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { UserRoundPlus, Scan } from "lucide-react";
+import { UserRoundPlus, Scan, LockKeyhole } from "lucide-react";
 
 // axios
 import axios from "axios";
@@ -71,13 +71,21 @@ export default function SecurityGuardHomePage() {
         </CardHeader>
       </Card>
 
-      <div className="w-10/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2">
-        <div className="w-10/12">
+      <div className="w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2">
+        <div className="w-10/12 md:space-x-[4%]">
           <Link to="/verify-user">
-            <Button className="w-full" variant="outline">
+            <Button className="w-full sm:w-full md:w-[48%]" variant="outline">
               Scan QR Code &nbsp;&nbsp;
               <div>
                 <Scan size={18} />
+              </div>
+            </Button>
+          </Link>
+          <Link to="/verify-user">
+            <Button className="w-full sm:w-full md:w-[48%]" variant="outline">
+              Security Code &nbsp;&nbsp;
+              <div>
+                <LockKeyhole size={18} />
               </div>
             </Button>
           </Link>
