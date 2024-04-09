@@ -15,6 +15,7 @@ import QrReaderBox from "@/assets/images/qrReaderBox.png";
 import { useState } from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 export default function QrCodeReader() {
   const { toast } = useToast();
@@ -73,9 +74,11 @@ export default function QrCodeReader() {
                   <Badge>Scanning . . .</Badge>
                 </p>
               </div>
-              <Button variant="destructive" size="sm" className="px-4">
-                Cancel
-              </Button>
+              <Link to="/">
+                <Button variant="destructive" size="sm" className="px-4">
+                  Cancel
+                </Button>
+              </Link>
               <Button size="sm" className="px-6">
                 Verify
               </Button>
