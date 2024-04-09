@@ -37,6 +37,7 @@ import { useDispatch } from "react-redux";
 import { OtpDialog } from "@/components/otpDialog/OtpDialog";
 import { show } from "@/components/otpDialog/showOtpSlice";
 import { ModeToggle } from "@/components/theme/mode-toggle";
+import axios from "axios";
 
 enum Role {
   STUDENT = "Student",
@@ -48,8 +49,8 @@ const formSchema = z.object({
   last_name: z.string().min(3).max(50),
   role: z.nativeEnum(Role),
   items: z.string(),
-  phone_number: z.number().min(9).max(10),
-  verfication_code: z.number().min(6).max(6),
+  phone_number: z.string().min(9).max(10),
+  // verfication_code: z.number().min(6).max(6),
   password: z.string().min(8).max(20),
   confirm_password: z.string().min(8).max(20),
 });
@@ -62,15 +63,25 @@ export default function RegistrationForm() {
     defaultValues: {
       first_name: "",
       last_name: "",
-      phone_number: undefined,
-      verfication_code: 0,
+      phone_number: "",
+      // verfication_code: 0,
       password: "",
+      confirm_password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const { confirm_password, ...payload } = values;
+    console.log(confirm_password);
+    axios
+      .post("http://localhost:2423/users/create", payload)
+      .then(function (response: unknown) {
+        console.log(response);
+      })
+      .catch(function (error: unknown) {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -177,12 +188,8 @@ export default function RegistrationForm() {
                               <SelectItem value="electronics">
                                 Electronics
                               </SelectItem>
-                              <SelectItem value="electronics">
-                                Electronics
-                              </SelectItem>
-                              <SelectItem value="electronics">
-                                Electronics
-                              </SelectItem>
+                              <SelectItem value="food">Food</SelectItem>
+                              <SelectItem value="test">Test</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -201,11 +208,7 @@ export default function RegistrationForm() {
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="+25198824 * * * "
-                          {...field}
-                          type="number"
-                        />
+                        <Input placeholder="+25198824 * * * " {...field} />
                       </FormControl>
                       {/* <FormDescription>
                 This is your public display name.
