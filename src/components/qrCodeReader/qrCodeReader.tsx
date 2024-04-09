@@ -67,16 +67,18 @@ export default function QrCodeReader() {
                 Decoding QR code. Please hold your device steady.
               </CardDescription>
             </div>
-            <div className="flex justify-center w-full ">
-              <p className="animate-bounce animate-infinite animate-ease-in animate-ease-out">
-                <Badge>Scanning . . .</Badge>
-              </p>
-            </div>
             <div className="flex justify-end w-full space-x-2">
-              <Button variant="destructive" size="sm">
+              <div className="flex justify-center items-center w-full ">
+                <p className="animate-bounce animate-infinite animate-ease-in animate-ease-out">
+                  <Badge>Scanning . . .</Badge>
+                </p>
+              </div>
+              <Button variant="destructive" size="sm" className="px-4">
                 Cancel
               </Button>
-              <Button size="sm">Verify</Button>
+              <Button size="sm" className="px-6">
+                Verify
+              </Button>
             </div>
           </CardFooter>
         </Card>
