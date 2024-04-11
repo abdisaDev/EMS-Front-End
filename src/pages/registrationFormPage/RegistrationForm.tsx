@@ -77,6 +77,7 @@ export default function RegistrationForm() {
       .post("http://localhost:2423/users/create", payload)
       .then(function (response: unknown) {
         console.log(response);
+        form.reset;
       })
       .catch(function (error: unknown) {
         console.log(error);
