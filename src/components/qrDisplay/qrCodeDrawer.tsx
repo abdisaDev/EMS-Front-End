@@ -9,6 +9,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import QrCodeDisplay from "./qrCodeDisplay";
 
 export default function QrCodeDrawer() {
   return (
@@ -19,6 +20,7 @@ export default function QrCodeDrawer() {
           <DrawerTitle>Are you absolutely sure?</DrawerTitle>
           <DrawerDescription>This action cannot be undone.</DrawerDescription>
         </DrawerHeader>
+        <QrCodeDisplay />
         <DrawerFooter>
           <Button>Submit</Button>
           <DrawerClose>
