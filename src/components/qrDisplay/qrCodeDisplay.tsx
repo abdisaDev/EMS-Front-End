@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import QRCode from "react-qr-code";
-import QrCodeDrawer from "./qrCodeDrawer";
 
 export default function QrCodeDisplay() {
   return (
@@ -15,7 +14,6 @@ export default function QrCodeDisplay() {
       <Card>
         <CardHeader>
           <div className="relative">
-            {" "}
             <QRCode
               size={256}
               style={{ height: "auto", maxWidth: "100%", width: "100%" }}
@@ -44,7 +42,6 @@ export default function QrCodeDisplay() {
           </CardFooter>
         </Card>
       </Card>
-      <QrCodeDrawer />
     </div>
   );
 }
