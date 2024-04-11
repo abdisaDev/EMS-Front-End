@@ -55,7 +55,10 @@ const formSchema = z.object({
     .max(50, "Maximum 50 charchters"),
   role: z.nativeEnum(Role),
   items: z.string(),
-  phone_number: z.string().min(9, "Invalid Phone Number").max(10),
+  phone_number: z
+    .string()
+    .min(9, "Invalid Phone Number")
+    .max(10, "Invalid Phone Number"),
   // verfication_code: z.number().min(6).max(6),
   password: z.string().min(8, "Minimum 8 Charachters").max(20),
   confirm_password: z.string().min(8, "Password didn't Match.").max(20),
@@ -63,7 +66,6 @@ const formSchema = z.object({
 
 export default function RegistrationForm() {
   const dispatch = useDispatch();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -88,6 +90,7 @@ export default function RegistrationForm() {
         console.log(error);
       });
   };
+  console.log(formSchema.safeParse("phone_number"));
 
   return (
     <>
@@ -230,6 +233,12 @@ export default function RegistrationForm() {
                     <Button
                       type="button"
                       className="w-full"
+                      disabled={
+                        !formSchema.safeParse({
+                          ...form.getValues(),
+                          phone_number: form.getValues("phone_number"),
+                        }).success
+                      }
                       onClick={() => dispatch(show())}
                     >
                       Get Code &nbsp; <KeyRound size={15} />
