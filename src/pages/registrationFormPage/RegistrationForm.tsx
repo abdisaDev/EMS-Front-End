@@ -296,7 +296,11 @@ export default function RegistrationForm() {
                 </div>
               </div>
             </div>
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={!formSchema.safeParse(form.getValues()).success}
+            >
               Register
             </Button>
           </form>
