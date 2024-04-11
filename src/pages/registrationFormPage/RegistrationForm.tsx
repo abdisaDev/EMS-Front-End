@@ -240,11 +240,11 @@ export default function RegistrationForm() {
                     <Button
                       type="button"
                       className="w-full"
-                      disabled={
-                        !phoneNumber.safeParse({
-                          phone_number: form.getValues("phone_number"),
-                        }).success
-                      }
+                      // disabled={
+                      //   !phoneNumber.safeParse({
+                      //     phone_number: form.getValues("phone_number"),
+                      //   }).success
+                      // }
                       onClick={() => dispatch(show())}
                     >
                       Get Code &nbsp; <KeyRound size={15} />
