@@ -44,20 +44,36 @@ enum Role {
   LECTURER = "Lecturer",
   EMPLOYEE = "Employee",
 }
-const formSchema = z.object({
-  first_name: z.string().min(3).max(50),
-  last_name: z.string().min(3).max(50),
-  role: z.nativeEnum(Role),
-  items: z.string(),
-  phone_number: z.string().min(9).max(10),
-  // verfication_code: z.number().min(6).max(6),
-  password: z.string().min(8).max(20),
-  confirm_password: z.string().min(8).max(20),
-});
+const formSchema = z
+  .object({
+    first_name: z
+      .string()
+      .min(3, "Minimum 3 charchters")
+      .max(50, "Maximum 50 charchters"),
+    last_name: z
+      .string()
+      .min(3, "Minimum 3 charchters")
+      .max(50, "Maximum 50 charchters"),
+    role: z.nativeEnum(Role),
+    items: z.string(),
+    phone_number: z
+      .string()
+      .min(9, "Invalid Phone Number")
+      .max(10, "Invalid Phone Number"),
+    // verfication_code: z.number().min(6).max(6),
+    password: z.string().min(8, "Minimum 8 Charachters").max(20),
+    confirm_password: z.string().min(8, "Password didn't Match.").max(20),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Passwords don't match!",
+    path: ["confirm_password"],
+  });
+
+// not working because of refining the formSchema
+// const phoneNumber = formSchema.pick({ phone_number: true });
 
 export default function RegistrationForm() {
   const dispatch = useDispatch();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -224,6 +240,11 @@ export default function RegistrationForm() {
                     <Button
                       type="button"
                       className="w-full"
+                      // disabled={
+                      //   !phoneNumber.safeParse({
+                      //     phone_number: form.getValues("phone_number"),
+                      //   }).success
+                      // }
                       onClick={() => dispatch(show())}
                     >
                       Get Code &nbsp; <KeyRound size={15} />
@@ -290,7 +311,11 @@ export default function RegistrationForm() {
                 </div>
               </div>
             </div>
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={!formSchema.safeParse(form.getValues()).success}
+            >
               Register
             </Button>
           </form>
