@@ -44,26 +44,32 @@ enum Role {
   LECTURER = "Lecturer",
   EMPLOYEE = "Employee",
 }
-const formSchema = z.object({
-  first_name: z
-    .string()
-    .min(3, "Minimum 3 charchters")
-    .max(50, "Maximum 50 charchters"),
-  last_name: z
-    .string()
-    .min(3, "Minimum 3 charchters")
-    .max(50, "Maximum 50 charchters"),
-  role: z.nativeEnum(Role),
-  items: z.string(),
-  phone_number: z
-    .string()
-    .min(9, "Invalid Phone Number")
-    .max(10, "Invalid Phone Number"),
-  // verfication_code: z.number().min(6).max(6),
-  password: z.string().min(8, "Minimum 8 Charachters").max(20),
-  confirm_password: z.string().min(8, "Password didn't Match.").max(20),
-});
+const formSchema = z
+  .object({
+    first_name: z
+      .string()
+      .min(3, "Minimum 3 charchters")
+      .max(50, "Maximum 50 charchters"),
+    last_name: z
+      .string()
+      .min(3, "Minimum 3 charchters")
+      .max(50, "Maximum 50 charchters"),
+    role: z.nativeEnum(Role),
+    items: z.string(),
+    phone_number: z
+      .string()
+      .min(9, "Invalid Phone Number")
+      .max(10, "Invalid Phone Number"),
+    // verfication_code: z.number().min(6).max(6),
+    password: z.string().min(8, "Minimum 8 Charachters").max(20),
+    confirm_password: z.string().min(8, "Password didn't Match.").max(20),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Passwords don't match!",
+    path: ["confirm_password"],
+  });
 
+// not working because of refining the formSchema
 const phoneNumber = formSchema.pick({ phone_number: true });
 
 export default function RegistrationForm() {
