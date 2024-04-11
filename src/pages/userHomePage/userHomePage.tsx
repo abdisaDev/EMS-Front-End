@@ -58,8 +58,10 @@ export default function UserHomePage() {
 
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-            <DrawerDescription>This action cannot be undone.</DrawerDescription>
+            <DrawerTitle>Scan for More Info!</DrawerTitle>
+            <DrawerDescription>
+              Scan this QR code to access additional information.
+            </DrawerDescription>
           </DrawerHeader>
           <div className="flex justify-center">
             <QRCode
@@ -71,7 +73,7 @@ export default function UserHomePage() {
           </div>
           <DrawerFooter>
             <DrawerClose>
-              <Button className="w-full">Close</Button>
+              <Button className="w-full">Cancel</Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>
