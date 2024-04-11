@@ -224,7 +224,7 @@ export default function RegistrationForm() {
                   )}
                 />
               </div>
-              <div className="flex items-center w-[48%]">
+              <div className="flex items-end w-[48%]">
                 <OtpDialog
                   dialogTrigerElement={
                     <Button
