@@ -45,14 +45,20 @@ enum Role {
   EMPLOYEE = "Employee",
 }
 const formSchema = z.object({
-  first_name: z.string().min(3).max(50),
-  last_name: z.string().min(3).max(50),
+  first_name: z
+    .string()
+    .min(3, "Minimum 3 charchters")
+    .max(50, "Maximum 50 charchters"),
+  last_name: z
+    .string()
+    .min(3, "Minimum 3 charchters")
+    .max(50, "Maximum 50 charchters"),
   role: z.nativeEnum(Role),
   items: z.string(),
-  phone_number: z.string().min(9).max(10),
+  phone_number: z.string().min(9, "Invalid Phone Number").max(10),
   // verfication_code: z.number().min(6).max(6),
-  password: z.string().min(8).max(20),
-  confirm_password: z.string().min(8).max(20),
+  password: z.string().min(8, "Minimum 8 Charachters").max(20),
+  confirm_password: z.string().min(8, "Password didn't Match.").max(20),
 });
 
 export default function RegistrationForm() {
@@ -218,7 +224,7 @@ export default function RegistrationForm() {
                   )}
                 />
               </div>
-              <div className="flex items-end w-[48%]">
+              <div className="flex items-center w-[48%]">
                 <OtpDialog
                   dialogTrigerElement={
                     <Button
