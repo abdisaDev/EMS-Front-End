@@ -64,6 +64,8 @@ const formSchema = z.object({
   confirm_password: z.string().min(8, "Password didn't Match.").max(20),
 });
 
+const phoneNumber = formSchema.pick({ phone_number: true });
+
 export default function RegistrationForm() {
   const dispatch = useDispatch();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -90,7 +92,6 @@ export default function RegistrationForm() {
         console.log(error);
       });
   };
-  console.log(formSchema.safeParse("phone_number"));
 
   return (
     <>
@@ -234,8 +235,7 @@ export default function RegistrationForm() {
                       type="button"
                       className="w-full"
                       disabled={
-                        !formSchema.safeParse({
-                          ...form.getValues(),
+                        !phoneNumber.safeParse({
                           phone_number: form.getValues("phone_number"),
                         }).success
                       }
