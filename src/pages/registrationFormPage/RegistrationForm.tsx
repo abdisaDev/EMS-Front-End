@@ -70,7 +70,7 @@ const formSchema = z
   });
 
 // not working because of refining the formSchema
-const phoneNumber = formSchema.pick({ phone_number: true });
+// const phoneNumber = formSchema.pick({ phone_number: true });
 
 export default function RegistrationForm() {
   const dispatch = useDispatch();
