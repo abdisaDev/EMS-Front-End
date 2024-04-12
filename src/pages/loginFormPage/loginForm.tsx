@@ -1,5 +1,5 @@
 // react
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
 // validation
 import { z } from "zod";
@@ -50,14 +50,9 @@ export default function LoginForm() {
     }
 
     const token = await executeRecaptcha("submit");
+    // backend implementaiton goes here
     console.log(token);
-    // Do whatever you want with the token
   }, [executeRecaptcha]);
-
-  // You can use useEffect to trigger the verification as soon as the component being loaded
-  useEffect(() => {
-    handleReCaptchaVerify();
-  }, [handleReCaptchaVerify]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -134,7 +129,11 @@ export default function LoginForm() {
             </div>
             <div>
               <Link to="/login">
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  onClick={handleReCaptchaVerify}
+                >
                   Login
                 </Button>
               </Link>
