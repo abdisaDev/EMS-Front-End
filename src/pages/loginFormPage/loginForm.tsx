@@ -1,6 +1,3 @@
-// react
-import { useCallback } from "react";
-
 // validation
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 // Shadcn Components
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -28,12 +24,16 @@ import { Link } from "react-router-dom";
 // reacptcha v3
 import {
   GoogleReCaptchaProvider,
-  useGoogleReCaptcha,
+  // useGoogleReCaptcha,
 } from "react-google-recaptcha-v3";
+import TempNotification from "@/components/tempNotification/tempNotification";
 
 const formSchema = z.object({
-  phone_number: z.number().min(9).max(10),
-  password: z.string().min(8).max(20),
+  phone_number: z
+    .string()
+    .min(9, "Invalid Phone Number.")
+    .max(10, "Invalid Phone Number."),
+  password: z.string().min(8, "Weak Password.").max(20, "Password Too Long."),
 });
 
 function onSubmit(values: z.infer<typeof formSchema>) {
@@ -41,18 +41,18 @@ function onSubmit(values: z.infer<typeof formSchema>) {
 }
 
 export default function LoginForm() {
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  // const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) {
-      console.log("Execute recaptcha not yet available");
-      return;
-    }
+  // const handleReCaptchaVerify = useCallback(async () => {
+  //   if (!executeRecaptcha) {
+  //     console.log("Execute recaptcha not yet available");
+  //     return;
+  //   }
 
-    const token = await executeRecaptcha("submit");
-    // backend implementaiton goes here
-    console.log(token);
-  }, [executeRecaptcha]);
+  //   const token = await executeRecaptcha("submit");
+  //   // backend implementaiton goes here
+  //   console.log(token);
+  // }, [executeRecaptcha]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,9 +86,6 @@ export default function LoginForm() {
                       <FormControl>
                         <Input placeholder="+25198824 * * *" {...field} />
                       </FormControl>
-                      {/* <FormDescription>
-                This is your public display name.
-              </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -104,9 +101,6 @@ export default function LoginForm() {
                       <FormControl>
                         <Input placeholder="* * * * * * * *" {...field} />
                       </FormControl>
-                      {/* <FormDescription>
-                This is your public display name.
-              </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -128,19 +122,23 @@ export default function LoginForm() {
               </div>
             </div>
             <div>
-              <Link to="/login">
-                <Button
+              {/* <Button
                   type="submit"
                   className="w-full"
                   onClick={handleReCaptchaVerify}
                 >
                   Login
-                </Button>
-              </Link>
+                </Button> */}
+              <TempNotification
+                value="Login"
+                className="w-full"
+                type="submit"
+              />
+
               <div>
                 <Separator className="my-4" />
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center text-sm">
                 <p className="w-10/12 text-center font-light	">
                   By clicking continue, you agree to our{" "}
                   <Link to="#" className="text-sky-500 underline">
