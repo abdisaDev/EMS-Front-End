@@ -12,7 +12,7 @@ import {
 import { FormControl, FormField, FormItem, FormLabel, Form } from "../ui/form";
 import { Input } from "../ui/input";
 
-// validation
+// validation lib
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
