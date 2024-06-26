@@ -16,6 +16,7 @@ import QRCode from "react-qr-code";
 
 // react router
 import { Link } from "react-router-dom";
+import ItemRegistration from "@/components/itemRegistraion/ItemRegistration";
 // import QrCodeDisplay from "@/components/qrDisplay/qrCodeDisplay";
 
 export default function UserHomePage() {
@@ -35,14 +36,16 @@ export default function UserHomePage() {
               </div>
             </Button>
           </Link>
-          <Link to="/verify-user">
-            <Button className="w-full sm:w-full md:w-[48%]" variant="outline">
-              Add Items &nbsp;&nbsp;
-              <div>
-                <CirclePlus size={18} />
-              </div>
-            </Button>
-          </Link>
+          <ItemRegistration
+            dialogTriggerButton={
+              <Button className="w-full sm:w-full md:w-[48%]" variant="outline">
+                Add Items &nbsp;&nbsp;
+                <div>
+                  <CirclePlus size={18} />
+                </div>
+              </Button>
+            }
+          />
         </div>
       </div>
 
