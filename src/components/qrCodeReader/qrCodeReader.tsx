@@ -41,7 +41,7 @@ export default function QrCodeReader() {
         <CardHeader>
           <div className="relative">
             <QrReader
-              delay={300}
+              delay={500}
               className="rounded-2xl border-8 border-slate-400 "
               constraints={{
                 audio: false,

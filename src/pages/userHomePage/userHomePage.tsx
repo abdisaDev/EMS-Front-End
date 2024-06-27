@@ -17,9 +17,21 @@ import QRCode from "react-qr-code";
 // react router
 import { Link } from "react-router-dom";
 import ItemRegistration from "@/components/itemRegistraion/ItemRegistration";
+import axios from "axios";
+import { useState } from "react";
 // import QrCodeDisplay from "@/components/qrDisplay/qrCodeDisplay";
 
 export default function UserHomePage() {
+  const [itemList, setItemList] = useState();
+
+  const fetchUserItems = async () => {
+    const id = localStorage.getItem("userId");
+    await axios
+      .get(`${import.meta.env.VITE_API_ADDRESS}/user/${id}/items`)
+      .then((response) => {
+        console.log(response);
+      });
+  };
   return (
     <div className="h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
       <WelcomePage user="Abdiza Dev" />
@@ -51,7 +63,12 @@ export default function UserHomePage() {
 
       <Drawer>
         <DrawerTrigger className="w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12">
-          <Button className="w-10/12">
+          <Button
+            className="w-10/12"
+            onClick={() => {
+              fetchUserItems();
+            }}
+          >
             Show QR Code &nbsp;&nbsp;
             <div>
               <Scan size={18} />
