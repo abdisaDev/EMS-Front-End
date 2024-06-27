@@ -69,13 +69,9 @@ export default function LoginForm() {
         password,
       })
       .then((response) => {
-        localStorage.setItem("access_token", response.data.access_toke);
+        localStorage.setItem("access_token", response.data.access_token);
         localStorage.setItem("role", response.data.role);
-        navigate(
-          localStorage.getItem("role") === "security_guard"
-            ? "/home"
-            : "/user-home"
-        );
+        navigate("/home");
       });
   };
 

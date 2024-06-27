@@ -16,6 +16,10 @@ export default function ErrorPage() {
               &emsp;* &nbsp; You have to login first inorder to use this app.
             </li>
             <li>
+              &emsp;* &nbsp; Registraion page is only available for security
+              guards.
+            </li>
+            <li>
               &emsp;* &nbsp; This page{" "}
               <code>
                 {

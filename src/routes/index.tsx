@@ -15,7 +15,12 @@ export const routes = [
   },
   {
     path: "/register",
-    element: <RegistrationForm />,
+    element:
+      localStorage.getItem("role") === "security_guard" ? (
+        <RegistrationForm />
+      ) : (
+        <ErrorPage />
+      ),
   },
   { path: "/verify-user", element: <QrCodeReader /> },
   {
