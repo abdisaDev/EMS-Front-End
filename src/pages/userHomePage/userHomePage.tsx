@@ -18,11 +18,11 @@ import QRCode from "react-qr-code";
 import { Link } from "react-router-dom";
 import ItemRegistration from "@/components/itemRegistraion/ItemRegistration";
 import axios from "axios";
-import { useState } from "react";
+// import { useState } from "react";
 // import QrCodeDisplay from "@/components/qrDisplay/qrCodeDisplay";
 
 export default function UserHomePage() {
-  const [itemList, setItemList] = useState();
+  // const [itemList, setItemList] = useState();
 
   const fetchUserItems = async () => {
     const id = localStorage.getItem("userId");
