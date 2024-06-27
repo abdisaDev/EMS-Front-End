@@ -18,23 +18,23 @@ import QRCode from "react-qr-code";
 import { Link } from "react-router-dom";
 import ItemRegistration from "@/components/itemRegistraion/ItemRegistration";
 import axios from "axios";
-// import { useState } from "react";
+import { useState } from "react";
 // import QrCodeDisplay from "@/components/qrDisplay/qrCodeDisplay";
 
 export default function UserHomePage() {
-  // const [itemList, setItemList] = useState();
+  const [itemList, setItemList] = useState("");
 
   const fetchUserItems = async () => {
     const id = localStorage.getItem("userId");
     await axios
-      .get(`${import.meta.env.VITE_API_ADDRESS}/user/${id}/items`)
+      .get(`${import.meta.env.VITE_API_ADDRESS}/user/${id}`)
       .then((response) => {
-        console.log(response);
+        setItemList(JSON.stringify(response.data));
       });
   };
   return (
     <div className="h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
-      <WelcomePage user="Abdiza Dev" />
+      <WelcomePage user={`${localStorage.getItem("name")!}`} />
       <div className="w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2">
         <div className="w-10/12 h-10/12 md:space-x-[4%]">
           <Link to="/verify-user">
@@ -86,7 +86,7 @@ export default function UserHomePage() {
           <div className="flex justify-center">
             <QRCode
               size={256}
-              value="Abdisa Dev"
+              value={itemList}
               viewBox={`0 0 256 256`}
               className="w-9/12 "
             />

@@ -74,9 +74,11 @@ export default function LoginForm() {
         password,
       })
       .then((response) => {
+        console.log(response);
         localStorage.setItem("access_token", response.data.access_token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("name", response.data.fullName);
         navigate("/home");
       });
   };

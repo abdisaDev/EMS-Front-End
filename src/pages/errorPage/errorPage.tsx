@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function ErrorPage() {
   return (
     <div className="flex flex-col justify-center items-center h-[100vh]">
-      <Alert variant="destructive" className="w-[50%]">
+      <Alert variant="destructive" className="w-[90%] sm:w-[90%] md:w-[50%]">
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>

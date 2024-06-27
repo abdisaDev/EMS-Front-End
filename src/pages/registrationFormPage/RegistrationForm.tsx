@@ -95,7 +95,7 @@ export default function RegistrationForm() {
     phone_number: string;
   }) => {
     await axios
-      .post("http://localhost:8888/user/register", payload)
+      .post(`${import.meta.env.VITE_API_ADDRESS}/user/register`, payload)
       .then(function (response: unknown) {
         console.log(response);
         form.reset;
