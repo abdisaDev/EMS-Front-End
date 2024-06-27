@@ -12,7 +12,15 @@ import {
 import { FormControl, FormField, FormItem, FormLabel, Form } from "../ui/form";
 import { Input } from "../ui/input";
 
-// validation
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+// validation lib
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -79,6 +87,28 @@ export default function ItemRegistration(props: {
                         <FormLabel>Color</FormLabel>
                         <FormControl>
                           <Input placeholder="Color" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <Select {...field}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="car">Car</SelectItem>
+                              <SelectItem value="computer">Computer</SelectItem>
+                            </SelectContent>
+                          </Select>
                         </FormControl>
                       </FormItem>
                     )}

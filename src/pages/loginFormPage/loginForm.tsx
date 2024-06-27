@@ -15,11 +15,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 // react router
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // reacptcha v3
 import {
@@ -27,18 +31,7 @@ import {
   // useGoogleReCaptcha,
 } from "react-google-recaptcha-v3";
 import TempNotification from "@/components/tempNotification/tempNotification";
-
-const formSchema = z.object({
-  phone_number: z
-    .string()
-    .min(9, "Invalid Phone Number.")
-    .max(10, "Invalid Phone Number."),
-  password: z.string().min(8, "Weak Password.").max(20, "Password Too Long."),
-});
-
-function onSubmit(values: z.infer<typeof formSchema>) {
-  console.log(values);
-}
+import axios from "axios";
 
 export default function LoginForm() {
   // const { executeRecaptcha } = useGoogleReCaptcha();
@@ -53,7 +46,19 @@ export default function LoginForm() {
   //   // backend implementaiton goes here
   //   console.log(token);
   // }, [executeRecaptcha]);
+  const navigate = useNavigate();
+  const formSchema = z.object({
+    phone_number: z
+      .string()
+      .min(9, "Invalid Phone Number.")
+      .max(10, "Invalid Phone Number."),
+    password: z.string(),
+  });
 
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    const { phone_number, password } = values;
+    signIn(phone_number, password);
+  }
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,6 +66,20 @@ export default function LoginForm() {
       password: "",
     },
   });
+
+  const signIn = async (phone_number: string, password: string) => {
+    await axios
+      .post(`${import.meta.env.VITE_API_ADDRESS}/auth/login`, {
+        phone_number,
+        password,
+      })
+      .then((response) => {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("role", response.data.role);
+        localStorage.setItem("userId", response.data.userId);
+        navigate("/home");
+      });
+  };
 
   return (
     <GoogleReCaptchaProvider
@@ -99,7 +118,11 @@ export default function LoginForm() {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input placeholder="* * * * * * * *" {...field} />
+                        <Input
+                          placeholder="* * * * * * * *"
+                          type="password"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -107,20 +130,20 @@ export default function LoginForm() {
                 />
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms" />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  keep me signed in
-                </label>
-              </div>
-              <div className="text-sky-500 underline text-sm flex items-center">
-                <Link to="#">Forgot password?</Link>
-              </div>
-            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <div className="flex justify-end">
+                    <div className="text-sky-500 underline text-sm flex items-center mr-[20px]">
+                      <Link to="#">Forgot password ?</Link>
+                    </div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  This feature isn't available right now.
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <div>
               {/* <Button
                   type="submit"
