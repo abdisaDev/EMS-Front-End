@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 // @ts-expect-error -> the below package didn't have any declarations
 import QrReader from "modern-react-qr-reader";
@@ -20,16 +21,16 @@ import { Link } from "react-router-dom";
 export default function QrCodeReader() {
   const { toast } = useToast();
 
-  const [qrResponse, setQrResponse] = useState<string>("Can't Find Name!");
+  const [qrResponse, setQrResponse] = useState<unknown>(null);
 
   const handleScanQrCode = (response: string) => {
     if (response) {
       toast({
         title: `QR Read Successfully - ${response}`,
-        description: "Check the detail inforamation on . . . ",
+        description: "Check the detail inforamation ",
         action: <ToastAction altText="Close Notification">Close</ToastAction>,
       });
-      setQrResponse(response);
+      setQrResponse(JSON.parse(response));
     }
     console.log(response);
     console.log(qrResponse);
@@ -40,16 +41,23 @@ export default function QrCodeReader() {
       <Card>
         <CardHeader>
           <div className="relative">
-            <QrReader
-              delay={500}
-              className="rounded-2xl border-8 border-slate-400 "
-              constraints={{
-                audio: false,
-                video: { facingMode: "environment" },
-              }}
-              onScan={handleScanQrCode}
-              onError={handleScanQrCode}
-            />
+            {!qrResponse ? (
+              <QrReader
+                delay={500}
+                className="rounded-2xl border-8 border-slate-400 "
+                constraints={{
+                  audio: false,
+                  video: { facingMode: "environment" },
+                }}
+                onScan={handleScanQrCode}
+                onError={handleScanQrCode}
+              />
+            ) : (
+              <Alert>
+                <AlertTitle>{`${qrResponse.first_name} ${qrResponse.last_name}`}</AlertTitle>
+                <AlertDescription>hdksahdjkak</AlertDescription>
+              </Alert>
+            )}
             <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
               <img
                 src={QrReaderBox}
