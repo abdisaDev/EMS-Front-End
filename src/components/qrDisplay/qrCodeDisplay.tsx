@@ -8,13 +8,14 @@ import {
 import { Button } from "../ui/button";
 import QRCode from "react-qr-code";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function QrCodeDisplay() {
-  const fetchUserItems = async () => {
-    await axios.get(`${import.meta.env.VITE_API_ADDRESS}`).then((response) => {
-      console.log(response);
-    });
-  };
+  // const [itemList, setItemList] = useState<unknown[]>([]);
+
+  useEffect(() => {
+    fetchUserItems();
+  }, []);
 
   return (
     <div className="flex justify-center items-center h-screen absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
@@ -24,7 +25,7 @@ export default function QrCodeDisplay() {
             <QRCode
               size={256}
               style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-              value="Abdisa Dev"
+              value="dadsa"
               viewBox={`0 0 256 256`}
             />
           </div>

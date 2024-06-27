@@ -16,7 +16,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 // react router
 import { Link, useNavigate } from "react-router-dom";
 
@@ -71,6 +76,7 @@ export default function LoginForm() {
       .then((response) => {
         localStorage.setItem("access_token", response.data.access_token);
         localStorage.setItem("role", response.data.role);
+        localStorage.setItem("userId", response.data.userId);
         navigate("/home");
       });
   };
@@ -124,16 +130,20 @@ export default function LoginForm() {
                 />
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="text-sky-500 underline text-sm flex items-center">
-                <Link to="#">Forgot password?</Link>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="text-sky-500 underline text-sm flex items-center">
-                  <Link to="/register">Don't have an account?</Link>
-                </div>
-              </div>
-            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <div className="flex justify-end">
+                    <div className="text-sky-500 underline text-sm flex items-center mr-[20px]">
+                      <Link to="#">Forgot password ?</Link>
+                    </div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  This feature isn't available right now.
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <div>
               {/* <Button
                   type="submit"

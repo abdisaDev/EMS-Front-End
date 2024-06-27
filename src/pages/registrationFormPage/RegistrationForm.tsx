@@ -41,9 +41,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 enum Role {
-  STUDENT = "Student",
-  LECTURER = "Lecturer",
-  EMPLOYEE = "Employee",
+  SECURITY_GUARD = "security_guard",
+  USER = "user",
+  DEFAULT = "",
 }
 const formSchema = z
   .object({
@@ -82,7 +82,7 @@ export default function RegistrationForm() {
       first_name: "",
       last_name: "",
       phone_number: "",
-      // verfication_code: 0,
+      role: Role.DEFAULT,
       password: "",
       confirm_password: "",
     },
