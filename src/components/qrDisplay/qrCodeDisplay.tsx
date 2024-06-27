@@ -7,15 +7,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import QRCode from "react-qr-code";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 export default function QrCodeDisplay() {
   // const [itemList, setItemList] = useState<unknown[]>([]);
-
-  useEffect(() => {
-    fetchUserItems();
-  }, []);
 
   return (
     <div className="flex justify-center items-center h-screen absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
