@@ -5,6 +5,7 @@ import QrCodeReader from "@/components/qrCodeReader/qrCodeReader";
 import SecurityGuardHomePage from "@/pages/securityGuardHomePage/securityGuardHomePage";
 import QrCodeDisplay from "@/components/qrDisplay/qrCodeDisplay";
 import UserHomePage from "@/pages/userHomePage/userHomePage";
+import ErrorPage from "@/pages/errorPage/errorPage";
 
 export const routes = [
   { path: "/", element: <LandingPage /> },
@@ -17,7 +18,17 @@ export const routes = [
     element: <RegistrationForm />,
   },
   { path: "/verify-user", element: <QrCodeReader /> },
-  { path: "/home", element: <SecurityGuardHomePage /> },
-  { path: "/user-home", element: <UserHomePage /> },
+  {
+    path: "/home",
+    element:
+      localStorage.getItem("role") === "security_guard" ? (
+        <SecurityGuardHomePage />
+      ) : localStorage.getItem("role") === "user" ? (
+        <UserHomePage />
+      ) : (
+        <ErrorPage />
+      ),
+  },
   { path: "/show-qr", element: <QrCodeDisplay /> },
+  { path: "*", element: <ErrorPage /> },
 ];

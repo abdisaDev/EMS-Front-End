@@ -38,6 +38,7 @@ import { OtpDialog } from "@/components/otpDialog/OtpDialog";
 import { show } from "@/components/otpDialog/showOtpSlice";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 enum Role {
   STUDENT = "Student",
@@ -55,7 +56,6 @@ const formSchema = z
       .min(3, "Minimum 3 charchters")
       .max(50, "Maximum 50 charchters"),
     role: z.nativeEnum(Role),
-    items: z.string(),
     phone_number: z
       .string()
       .min(9, "Invalid Phone Number")
@@ -74,6 +74,8 @@ const formSchema = z
 
 export default function RegistrationForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -85,19 +87,28 @@ export default function RegistrationForm() {
       confirm_password: "",
     },
   });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const { confirm_password, ...payload } = values;
-    console.log(confirm_password);
-    axios
-      .post("http://localhost:2423/users/create", payload)
+  const registerUser = async (payload: {
+    role: Role;
+    password: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+  }) => {
+    await axios
+      .post("http://localhost:8888/user/register", payload)
       .then(function (response: unknown) {
         console.log(response);
         form.reset;
+        navigate("/login");
       })
       .catch(function (error: unknown) {
         console.log(error);
       });
+  };
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { confirm_password, ...payload } = values;
+    registerUser(payload);
   };
 
   return (
@@ -153,7 +164,7 @@ export default function RegistrationForm() {
               </div>
             </div>
             <div className="flex justify-between">
-              <div className="w-[48%]">
+              <div className="w-full">
                 <FormField
                   name="role"
                   control={form.control}
@@ -171,42 +182,10 @@ export default function RegistrationForm() {
                           <SelectContent>
                             <SelectGroup>
                               <SelectLabel>Roles</SelectLabel>
-                              <SelectItem value="Student">Student</SelectItem>
-                              <SelectItem value="Lecturer">
-                                Lecuturer
+                              <SelectItem value="user">User</SelectItem>
+                              <SelectItem value="security_guard">
+                                Security Guard
                               </SelectItem>
-                              <SelectItem value="Employee">Employee</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="w-[48%]">
-                <FormField
-                  name="items"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Items</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Category" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Categories</SelectLabel>
-                              <SelectItem value="electronics">
-                                Electronics
-                              </SelectItem>
-                              <SelectItem value="food">Food</SelectItem>
-                              <SelectItem value="test">Test</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
