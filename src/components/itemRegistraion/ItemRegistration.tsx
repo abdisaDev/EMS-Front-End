@@ -25,6 +25,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
+import axios from "axios";
 
 enum Category {
   CAR = "car",
@@ -35,6 +36,7 @@ enum Category {
 const formSchema = z.object({
   model: z.string(),
   color: z.string(),
+  serial_number: z.string(),
   category: z.nativeEnum(Category),
   description: z.string(),
 });
@@ -48,9 +50,27 @@ export default function ItemRegistration(props: {
       model: "",
       color: "",
       category: Category.DEFAULT,
+      serial_number: "",
       description: "",
     },
   });
+  const registerItem = async (formPayload: unknown) => {
+    await axios
+      .post(
+        `${import.meta.env.VITE_API_ADDRESS}/user/${localStorage.getItem(
+          "userId"
+        )}/registerItem`,
+        formPayload
+      )
+      .then((response) => {
+        console.log(response);
+      });
+  };
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    registerItem(values);
+    form.reset;
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -60,9 +80,9 @@ export default function ItemRegistration(props: {
         <AlertDialogHeader>
           <AlertDialogTitle>Add User Items.</AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogDescription>
-          <Form {...form}>
-            <form>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <AlertDialogDescription>
               <div>
                 <div>
                   <FormField
@@ -95,12 +115,30 @@ export default function ItemRegistration(props: {
                 <div>
                   <FormField
                     control={form.control}
+                    name="serial_number"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Serial Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Serial Number" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
                     name="category"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Category</FormLabel>
                         <FormControl>
-                          <Select {...field}>
+                          <Select
+                            {...field}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Category" />
                             </SelectTrigger>
@@ -129,13 +167,13 @@ export default function ItemRegistration(props: {
                   />
                 </div>
               </div>
-            </form>
-          </Form>
-        </AlertDialogDescription>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Add Item</AlertDialogAction>
-        </AlertDialogFooter>
+            </AlertDialogDescription>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction type="submit">Add Item</AlertDialogAction>
+            </AlertDialogFooter>
+          </form>
+        </Form>
       </AlertDialogContent>
     </AlertDialog>
   );
