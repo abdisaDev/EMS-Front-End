@@ -55,14 +55,14 @@ export default function LoginForm() {
     password: z.string(),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { phone_number, password } = values;
-    signIn(phone_number, password);
+    await signIn(phone_number, password);
   }
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phone_number: undefined,
+      phone_number: "",
       password: "",
     },
   });
@@ -78,7 +78,7 @@ export default function LoginForm() {
         localStorage.setItem("access_token", response.data.access_token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("userId", response.data.userId);
-        localStorage.setItem("name", response.data.fullName);
+        localStorage.setItem("name", response.data.name);
         navigate("/home");
       });
   };

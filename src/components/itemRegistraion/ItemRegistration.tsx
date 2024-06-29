@@ -26,6 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import axios from "axios";
+import { MoveRight } from "lucide-react";
 
 enum Category {
   CAR = "car",
@@ -34,6 +35,7 @@ enum Category {
 }
 
 const formSchema = z.object({
+  user: z.string(),
   model: z.string(),
   color: z.string(),
   serial_number: z.string(),
@@ -43,10 +45,18 @@ const formSchema = z.object({
 
 export default function ItemRegistration(props: {
   dialogTriggerButton: JSX.Element;
+  allUsers: {
+    id: number;
+    user: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+  }[];
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      user: "",
       model: "",
       color: "",
       category: Category.DEFAULT,
@@ -54,12 +64,19 @@ export default function ItemRegistration(props: {
       description: "",
     },
   });
-  const registerItem = async (formPayload: unknown) => {
+  const registerItem = async (formPayload: {
+    user: string;
+    model: string;
+    color: string;
+    category: Category;
+    serial_number: string;
+    description: string;
+  }) => {
     await axios
       .post(
-        `${import.meta.env.VITE_API_ADDRESS}/user/${localStorage.getItem(
-          "userId"
-        )}/registerItem`,
+        `${import.meta.env.VITE_API_ADDRESS}/user/${
+          formPayload.user
+        }/registerItem`,
         formPayload
       )
       .then((response) => {
@@ -84,6 +101,42 @@ export default function ItemRegistration(props: {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <AlertDialogDescription>
               <div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="user"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <Select
+                            {...field}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="User" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {props.allUsers.map((user) => {
+                                return (
+                                  <SelectItem
+                                    value={String(user.id)}
+                                    className="w-full"
+                                  >
+                                    {`${user.first_name} ${user.last_name}`}
+                                    <MoveRight size={16} absoluteStrokeWidth />
+                                    {`${user.phone_number}`}
+                                  </SelectItem>
+                                );
+                              })}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <div>
                   <FormField
                     control={form.control}

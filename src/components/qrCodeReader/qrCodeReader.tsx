@@ -55,7 +55,17 @@ export default function QrCodeReader() {
             ) : (
               <Alert>
                 <AlertTitle>{`${qrResponse.first_name} ${qrResponse.last_name}`}</AlertTitle>
-                <AlertDescription>hdksahdjkak</AlertDescription>
+                {qrResponse.items.map((item) => {
+                  return (
+                    <AlertDescription>
+                      <div>{item.model}</div>
+                      <div>{item.serial_number}</div>
+                      <div>{item.color}</div>
+                      <div>{item.category}</div>
+                      <div>{item.description}</div>
+                    </AlertDescription>
+                  );
+                })}
               </Alert>
             )}
             <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
