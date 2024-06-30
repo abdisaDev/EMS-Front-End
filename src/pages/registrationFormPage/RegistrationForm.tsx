@@ -38,7 +38,8 @@ import { OtpDialog } from "@/components/otpDialog/OtpDialog";
 import { show } from "@/components/otpDialog/showOtpSlice";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { store } from "@/app/store";
 
 enum Role {
   SECURITY_GUARD = "security_guard",
@@ -60,7 +61,6 @@ const formSchema = z
       .string()
       .min(9, "Invalid Phone Number")
       .max(10, "Invalid Phone Number"),
-    // verfication_code: z.number().min(6).max(6),
     password: z.string().min(8, "Minimum 8 Charachters").max(20),
     confirm_password: z.string().min(8, "Password didn't Match.").max(20),
   })
@@ -87,6 +87,7 @@ export default function RegistrationForm() {
       confirm_password: "",
     },
   });
+
   const registerUser = async (payload: {
     role: Role;
     password: string;
@@ -105,10 +106,21 @@ export default function RegistrationForm() {
         console.log(error);
       });
   };
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirm_password, ...payload } = values;
     registerUser(payload);
+  };
+
+  const getOtp = async (phone_number: string) => {
+    return await axios
+      .post(`${import.meta.env.VITE_API_ADDRESS}/otp/get`, {
+        phone_number,
+      })
+      .then((res) => {
+        return res.data.message;
+      });
   };
 
   return (
@@ -136,6 +148,11 @@ export default function RegistrationForm() {
                       <FormControl>
                         <Input placeholder="Abdisa" {...field} />
                       </FormControl>
+                      {form.formState.errors.name && (
+                        <span className="error">
+                          {form.formState.errors.name.message}
+                        </span>
+                      )}
                       {/* <FormDescription>
                 This is your public display name.
               </FormDescription> */}
@@ -220,12 +237,11 @@ export default function RegistrationForm() {
                     <Button
                       type="button"
                       className="w-full"
-                      // disabled={
-                      //   !phoneNumber.safeParse({
-                      //     phone_number: form.getValues("phone_number"),
-                      //   }).success
-                      // }
-                      onClick={() => dispatch(show())}
+                      disabled={form.getValues().phone_number.length !== 10}
+                      onClick={() => {
+                        getOtp(form.getValues().phone_number);
+                        dispatch(show());
+                      }}
                     >
                       Get Code &nbsp; <KeyRound size={15} />
                     </Button>
@@ -286,7 +302,14 @@ export default function RegistrationForm() {
                     Accept terms and conditions
                   </label>
                   <p className="text-sm text-muted-foreground">
-                    You agree to our Terms of Service and Privacy Policy.
+                    You agree to our&nbsp;
+                    <Link to="#" className="text-sky-500">
+                      Terms of Service
+                    </Link>
+                    &nbsp;and&nbsp;
+                    <Link to="#" className="text-sky-500">
+                      Privacy Policy.
+                    </Link>
                   </p>
                 </div>
               </div>
@@ -294,7 +317,7 @@ export default function RegistrationForm() {
             <Button
               type="submit"
               className="w-full"
-              disabled={!formSchema.safeParse(form.getValues()).success}
+              // disabled={!formSchema.safeParse(form.getValues()).success}
             >
               Register
             </Button>

@@ -154,11 +154,7 @@ export default function LoginForm() {
                 >
                   Login
                 </Button> */}
-              <TempNotification
-                value="Login"
-                className="w-full"
-                type="submit"
-              />
+              <TempNotification value="Login" className="w-full" />
 
               <div>
                 <Separator className="my-4" />
