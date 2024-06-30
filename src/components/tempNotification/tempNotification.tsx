@@ -1,6 +1,5 @@
 import { toast, Toaster } from "sonner";
 import { Button } from "@/components/ui/button";
-import { title } from "process";
 
 export default function TempNotification(props: {
   value: string;
@@ -9,7 +8,7 @@ export default function TempNotification(props: {
   description: string;
 }) {
   const toastHandler = () => {
-    return toast.error(title, {
+    return toast.error(props.title, {
       description: props.description,
       action: {
         label: "Close",
