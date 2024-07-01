@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 
 export default function TempNotification(props: {
   value: string;
-  type: "submit" | "reset" | "button";
   className: string;
+  title: string;
+  description: string;
 }) {
   const toastHandler = () => {
-    return toast.error("Server hiccup!", {
-      description: "Hold tight, we'll be back soon.",
+    return toast.error(props.title, {
+      description: props.description,
       action: {
         label: "Close",
         onClick: () => {},
@@ -18,11 +19,7 @@ export default function TempNotification(props: {
   return (
     <div>
       <Toaster position="bottom-left" richColors />
-      <Button
-        onClick={toastHandler}
-        type={props.type}
-        className={props.className}
-      >
+      <Button onClick={toastHandler} className={props.className}>
         {props.value}
       </Button>
     </div>

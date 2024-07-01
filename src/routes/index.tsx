@@ -16,7 +16,8 @@ export const routes = [
   {
     path: "/register",
     element:
-      localStorage.getItem("role") === "security_guard" ? (
+      localStorage.getItem("role") === "security_guard" ||
+      localStorage.getItem("role") === "admin" ? (
         <RegistrationForm />
       ) : (
         <ErrorPage />
@@ -31,7 +32,8 @@ export const routes = [
       ) : localStorage.getItem("role") === "user" ? (
         <UserHomePage />
       ) : (
-        <ErrorPage />
+        // <ErrorPage />
+        <h1>dsa</h1>
       ),
   },
   { path: "/show-qr", element: <QrCodeDisplay /> },

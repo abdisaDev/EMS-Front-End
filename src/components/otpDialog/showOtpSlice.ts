@@ -3,10 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface ShowOtpDialog {
   value: boolean;
+  otp: string;
+  isOtpVerified: boolean;
 }
 
 const initialState: ShowOtpDialog = {
   value: false,
+  otp: "",
+  isOtpVerified: false,
 };
 
 export const showOtpDialog = createSlice({
@@ -14,18 +18,21 @@ export const showOtpDialog = createSlice({
   initialState,
   reducers: {
     show: (state) => {
-      console.log(state, "state");
       state.value = true;
     },
-
+    otpValue: (state, action) => {
+      state.otp = action.payload;
+    },
+    isOtpVerified: (state, action) => {
+      state.isOtpVerified = action.payload;
+    },
     hide: (state) => {
-      console.log(state, "state");
       state.value = false;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { show, hide } = showOtpDialog.actions;
+export const { show, hide, otpValue } = showOtpDialog.actions;
 
 export default showOtpDialog.reducer;

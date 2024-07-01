@@ -8,9 +8,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { FormControl, FormField, FormItem, FormLabel, Form } from "../ui/form";
-import { Input } from "../ui/input";
+} from '@/components/ui/alert-dialog';
+import { FormControl, FormField, FormItem, FormLabel, Form } from '../ui/form';
+import { Input } from '../ui/input';
 
 import {
   Select,
@@ -18,22 +18,24 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 // validation lib
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Textarea } from "../ui/textarea";
-import axios from "axios";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Textarea } from '../ui/textarea';
+import axios from 'axios';
+import { MoveRight } from 'lucide-react';
 
 enum Category {
-  CAR = "car",
-  COMPUTER = "computer",
-  DEFAULT = "",
+  CAR = 'car',
+  COMPUTER = 'computer',
+  DEFAULT = '',
 }
 
 const formSchema = z.object({
+  user: z.string(),
   model: z.string(),
   color: z.string(),
   serial_number: z.string(),
@@ -43,23 +45,38 @@ const formSchema = z.object({
 
 export default function ItemRegistration(props: {
   dialogTriggerButton: JSX.Element;
+  allUsers: {
+    id: number;
+    user: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+  }[];
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      model: "",
-      color: "",
+      user: '',
+      model: '',
+      color: '',
       category: Category.DEFAULT,
-      serial_number: "",
-      description: "",
+      serial_number: '',
+      description: '',
     },
   });
-  const registerItem = async (formPayload: unknown) => {
+  const registerItem = async (formPayload: {
+    user: string;
+    model: string;
+    color: string;
+    category: Category;
+    serial_number: string;
+    description: string;
+  }) => {
     await axios
       .post(
-        `${import.meta.env.VITE_API_ADDRESS}/user/${localStorage.getItem(
-          "userId"
-        )}/registerItem`,
+        `${import.meta.env.VITE_API_ADDRESS}/user/${
+          formPayload.user
+        }/registerItem`,
         formPayload
       )
       .then((response) => {
@@ -67,7 +84,6 @@ export default function ItemRegistration(props: {
       });
   };
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     registerItem(values);
     form.reset;
   };
@@ -87,49 +103,7 @@ export default function ItemRegistration(props: {
                 <div>
                   <FormField
                     control={form.control}
-                    name="model"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Model</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Model" {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="color"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Color</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Color" {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="serial_number"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Serial Number</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Serial Number" {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name="category"
+                    name='user'
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Category</FormLabel>
@@ -140,11 +114,21 @@ export default function ItemRegistration(props: {
                             defaultValue={field.value}
                           >
                             <SelectTrigger>
-                              <SelectValue placeholder="Category" />
+                              <SelectValue placeholder='User' />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="car">Car</SelectItem>
-                              <SelectItem value="computer">Computer</SelectItem>
+                              {props.allUsers.map((user) => {
+                                return (
+                                  <SelectItem
+                                    value={String(user.id)}
+                                    className='w-full'
+                                  >
+                                    {`${user.first_name} ${user.last_name}`}
+                                    <MoveRight size={16} absoluteStrokeWidth />
+                                    {`${user.phone_number}`}
+                                  </SelectItem>
+                                );
+                              })}
                             </SelectContent>
                           </Select>
                         </FormControl>
@@ -155,12 +139,80 @@ export default function ItemRegistration(props: {
                 <div>
                   <FormField
                     control={form.control}
-                    name="description"
+                    name='model'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Model</FormLabel>
+                        <FormControl>
+                          <Input placeholder='Model' {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name='color'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Color</FormLabel>
+                        <FormControl>
+                          <Input placeholder='Color' {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name='serial_number'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Serial Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder='Serial Number' {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name='category'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <Select
+                            {...field}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder='Category' />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value='car'>Car</SelectItem>
+                              <SelectItem value='computer'>Computer</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name='description'
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Textarea placeholder="Description" {...field} />
+                          <Textarea placeholder='Description' {...field} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -170,7 +222,7 @@ export default function ItemRegistration(props: {
             </AlertDialogDescription>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction type="submit">Add Item</AlertDialogAction>
+              <AlertDialogAction type='submit'>Add Item</AlertDialogAction>
             </AlertDialogFooter>
           </form>
         </Form>
