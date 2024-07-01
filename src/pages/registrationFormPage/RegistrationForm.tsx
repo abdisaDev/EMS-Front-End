@@ -1,13 +1,13 @@
 // validation
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 // Form Handler
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 
 // Shadcn Components
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormControl,
@@ -15,7 +15,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
@@ -24,49 +24,49 @@ import {
   SelectValue,
   SelectLabel,
   SelectGroup,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 
 // icons
-import { KeyRound } from "lucide-react";
+import { KeyRound } from 'lucide-react';
 
 // redux-toolkit
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 
 // custom component
-import { OtpDialog } from "@/components/otpDialog/OtpDialog";
-import { show } from "@/components/otpDialog/showOtpSlice";
-import { ModeToggle } from "@/components/theme/mode-toggle";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { store } from "@/app/store";
+import { OtpDialog } from '@/components/otpDialog/OtpDialog';
+import { show } from '@/components/otpDialog/showOtpSlice';
+import { ModeToggle } from '@/components/theme/mode-toggle';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 enum Role {
-  SECURITY_GUARD = "security_guard",
-  USER = "user",
-  DEFAULT = "",
+  SECURITY_GUARD = 'security_guard',
+  USER = 'user',
+  DEFAULT = '',
 }
+
 const formSchema = z
   .object({
     first_name: z
       .string()
-      .min(3, "Minimum 3 charchters")
-      .max(50, "Maximum 50 charchters"),
+      .min(3, 'Minimum 3 charchters')
+      .max(50, 'Maximum 50 charchters'),
     last_name: z
       .string()
-      .min(3, "Minimum 3 charchters")
-      .max(50, "Maximum 50 charchters"),
+      .min(3, 'Minimum 3 charchters')
+      .max(50, 'Maximum 50 charchters'),
     role: z.nativeEnum(Role),
     phone_number: z
       .string()
-      .min(9, "Invalid Phone Number")
-      .max(10, "Invalid Phone Number"),
-    password: z.string().min(8, "Minimum 8 Charachters").max(20),
+      .min(9, 'Invalid Phone Number')
+      .max(10, 'Invalid Phone Number'),
+    password: z.string().min(8, 'Minimum 8 Charachters').max(20),
     confirm_password: z.string().min(8, "Password didn't Match.").max(20),
   })
   .refine((data) => data.password === data.confirm_password, {
     message: "Passwords don't match!",
-    path: ["confirm_password"],
+    path: ['confirm_password'],
   });
 
 // not working because of refining the formSchema
@@ -79,12 +79,12 @@ export default function RegistrationForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      phone_number: "",
+      first_name: '',
+      last_name: '',
+      phone_number: '',
       role: Role.DEFAULT,
-      password: "",
-      confirm_password: "",
+      password: '',
+      confirm_password: '',
     },
   });
 
@@ -100,7 +100,7 @@ export default function RegistrationForm() {
       .then(function (response: unknown) {
         console.log(response);
         form.reset;
-        navigate("/login");
+        navigate('/login');
       })
       .catch(function (error: unknown) {
         console.log(error);
@@ -125,34 +125,29 @@ export default function RegistrationForm() {
 
   return (
     <>
-      <div className="w-full h-screen flex justify-center items-center absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+      <div className='w-full h-screen flex justify-center items-center absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]'>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="relative space-y-5 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 py-3 px-4 rounded-lg bg-[#f7f7f7]"
+            className='relative space-y-5 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 py-3 px-4 rounded-lg bg-[#f7f7f7]'
           >
-            <div className="absolute top-5 right-5">
+            <div className='absolute top-5 right-5'>
               <ModeToggle />
             </div>
-            <p className="text-center font-black text-2xl text-[#0f172a]">
+            <p className='text-center font-black text-2xl text-[#0f172a]'>
               Sign Up
             </p>
-            <div className="flex justify-between">
-              <div className="w-[48%]">
+            <div className='flex justify-between'>
+              <div className='w-[48%]'>
                 <FormField
                   control={form.control}
-                  name="first_name"
+                  name='first_name'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>First Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Abdisa" {...field} />
+                        <Input placeholder='Abdisa' {...field} />
                       </FormControl>
-                      {form.formState.errors.name && (
-                        <span className="error">
-                          {form.formState.errors.name.message}
-                        </span>
-                      )}
                       {/* <FormDescription>
                 This is your public display name.
               </FormDescription> */}
@@ -161,15 +156,15 @@ export default function RegistrationForm() {
                   )}
                 />
               </div>
-              <div className="w-[48%]">
+              <div className='w-[48%]'>
                 <FormField
                   control={form.control}
-                  name="last_name"
+                  name='last_name'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Last Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Alemu" {...field} />
+                        <Input placeholder='Alemu' {...field} />
                       </FormControl>
                       {/* <FormDescription>
                 This is your public display name.
@@ -180,10 +175,10 @@ export default function RegistrationForm() {
                 />
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="w-full">
+            <div className='flex justify-between'>
+              <div className='w-full'>
                 <FormField
-                  name="role"
+                  name='role'
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
@@ -194,13 +189,13 @@ export default function RegistrationForm() {
                           defaultValue={field.value}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Role" />
+                            <SelectValue placeholder='Role' />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
                               <SelectLabel>Roles</SelectLabel>
-                              <SelectItem value="user">User</SelectItem>
-                              <SelectItem value="security_guard">
+                              <SelectItem value='user'>User</SelectItem>
+                              <SelectItem value='security_guard'>
                                 Security Guard
                               </SelectItem>
                             </SelectGroup>
@@ -212,16 +207,16 @@ export default function RegistrationForm() {
                 />
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="w-[48%]">
+            <div className='flex justify-between'>
+              <div className='w-[48%]'>
                 <FormField
                   control={form.control}
-                  name="phone_number"
+                  name='phone_number'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
-                        <Input placeholder="+25198824 * * * " {...field} />
+                        <Input placeholder='+25198824 * * * ' {...field} />
                       </FormControl>
                       {/* <FormDescription>
                 This is your public display name.
@@ -231,12 +226,12 @@ export default function RegistrationForm() {
                   )}
                 />
               </div>
-              <div className="flex items-end w-[48%]">
+              <div className='flex items-end w-[48%]'>
                 <OtpDialog
                   dialogTrigerElement={
                     <Button
-                      type="button"
-                      className="w-full"
+                      type='button'
+                      className='w-full'
                       disabled={form.getValues().phone_number.length !== 10}
                       onClick={() => {
                         getOtp(form.getValues().phone_number);
@@ -249,18 +244,18 @@ export default function RegistrationForm() {
                 />
               </div>
             </div>
-            <div className="w-full space-y-2">
+            <div className='w-full space-y-2'>
               <FormField
                 control={form.control}
-                name="password"
+                name='password'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="* * * * * * * *"
+                        placeholder='* * * * * * * *'
                         {...field}
-                        type="password"
+                        type='password'
                       />
                     </FormControl>
                     {/* <FormDescription>
@@ -272,15 +267,15 @@ export default function RegistrationForm() {
               />
               <FormField
                 control={form.control}
-                name="confirm_password"
+                name='confirm_password'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="* * * * * * * *"
+                        placeholder='* * * * * * * *'
                         {...field}
-                        type="password"
+                        type='password'
                       />
                     </FormControl>
                     {/* <FormDescription>
@@ -291,23 +286,23 @@ export default function RegistrationForm() {
                 )}
               />
             </div>
-            <div className="flex space-x-5 justify-between">
-              <div className="items-top flex space-x-2">
-                <Checkbox id="terms1" />
-                <div className="grid gap-1.5 leading-none">
+            <div className='flex space-x-5 justify-between'>
+              <div className='items-top flex space-x-2'>
+                <Checkbox id='terms1' />
+                <div className='grid gap-1.5 leading-none'>
                   <label
-                    htmlFor="terms1"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    htmlFor='terms1'
+                    className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                   >
                     Accept terms and conditions
                   </label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className='text-sm text-muted-foreground'>
                     You agree to our&nbsp;
-                    <Link to="#" className="text-sky-500">
+                    <Link to='#' className='text-sky-500'>
                       Terms of Service
                     </Link>
                     &nbsp;and&nbsp;
-                    <Link to="#" className="text-sky-500">
+                    <Link to='#' className='text-sky-500'>
                       Privacy Policy.
                     </Link>
                   </p>
@@ -315,8 +310,8 @@ export default function RegistrationForm() {
               </div>
             </div>
             <Button
-              type="submit"
-              className="w-full"
+              type='submit'
+              className='w-full'
               // disabled={!formSchema.safeParse(form.getValues()).success}
             >
               Register
