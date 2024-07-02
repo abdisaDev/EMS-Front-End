@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
-import { MoveLeft, MoveRight } from 'lucide-react';
+import { MoveRight } from 'lucide-react';
 
 enum Category {
   DEFAULT = '',
