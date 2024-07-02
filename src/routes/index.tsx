@@ -37,7 +37,8 @@ export const routes = [
       ) : localStorage.getItem('role') === 'user' ? (
         <UserHomePage />
       ) : (
-        <ErrorPage />
+        <></>
+        // <ErrorPage />
       ),
   },
 

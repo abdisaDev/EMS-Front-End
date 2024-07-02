@@ -1,6 +1,6 @@
 import WelcomePage from "@/components/welcomePage/welcomePage";
 import { Button } from "@/components/ui/button";
-import { Scan, LockKeyhole } from "lucide-react";
+import { Scan, LockKeyhole, LogOutIcon } from "lucide-react";
 
 import {
   Drawer,
@@ -15,7 +15,7 @@ import {
 import QRCode from "react-qr-code";
 
 // react router
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import { useState } from "react";
@@ -23,6 +23,7 @@ import { useState } from "react";
 
 export default function UserHomePage() {
   const [itemList, setItemList] = useState("");
+  const navigate = useNavigate()
 
   const fetchUserItems = async () => {
     const id = localStorage.getItem("userId");
@@ -88,6 +89,17 @@ export default function UserHomePage() {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
+      <div className='w-10/12'>
+          <Button className='w-full' onClick={() => {
+            localStorage.clear()
+            navigate("/login")
+          }}>
+            Logout &nbsp;&nbsp;
+            <div>
+              <LogOutIcon size={18} />
+            </div>
+          </Button>
+        </div>
     </div>
   );
 }
