@@ -44,7 +44,7 @@ export const routes = [
   {
     path: '/show-qr',
     element:
-      localStorage.get('access_token') ||
+      localStorage.getItem('access_token') ||
       (localStorage.getItem('role') === 'security_guard' && <QrCodeDisplay />),
   },
   { path: '*', element: <ErrorPage /> },
