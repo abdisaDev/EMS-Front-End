@@ -1,12 +1,12 @@
 // validation
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 // Form Handler
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 
 // Shadcn Components
-import { Input } from "@/components/ui/input";
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormControl,
@@ -14,24 +14,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/form';
+import { Separator } from '@/components/ui/separator';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip';
 // react router
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 
 // reacptcha v3
 import {
   GoogleReCaptchaProvider,
   // useGoogleReCaptcha,
-} from "react-google-recaptcha-v3";
-import TempNotification from "@/components/tempNotification/tempNotification";
-import axios from "axios";
+} from 'react-google-recaptcha-v3';
+import TempNotification from '@/components/tempNotification/tempNotification';
+import axios from 'axios';
 
 export default function LoginForm() {
   // const { executeRecaptcha } = useGoogleReCaptcha();
@@ -50,20 +50,20 @@ export default function LoginForm() {
   const formSchema = z.object({
     phone_number: z
       .string()
-      .min(9, "Invalid Phone Number.")
-      .max(10, "Invalid Phone Number."),
+      .min(9, 'Invalid Phone Number.')
+      .max(10, 'Invalid Phone Number.'),
     password: z.string(),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { phone_number, password } = values;
-    signIn(phone_number, password);
+    await signIn(phone_number, password);
   }
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phone_number: undefined,
-      password: "",
+      phone_number: '',
+      password: '',
     },
   });
 
@@ -75,11 +75,11 @@ export default function LoginForm() {
       })
       .then((response) => {
         console.log(response);
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("role", response.data.role);
-        localStorage.setItem("userId", response.data.userId);
-        localStorage.setItem("name", response.data.fullName);
-        navigate("/home");
+        localStorage.setItem('access_token', response.data.access_token);
+        localStorage.setItem('role', response.data.role);
+        localStorage.setItem('userId', response.data.userId);
+        localStorage.setItem('name', response.data.name);
+        navigate('/home');
       });
   };
 
@@ -87,42 +87,42 @@ export default function LoginForm() {
     <GoogleReCaptchaProvider
       reCaptchaKey={`${import.meta.env.VITE_SITE_KEY_EMS}`}
     >
-      <div className="w-full h-screen flex justify-center items-center absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+      <div className='w-full h-screen flex justify-center items-center absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]'>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="relative space-y-5 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 py-3 px-4 rounded-lg bg-[#f7f7f7]"
+            className='relative space-y-5 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 py-3 px-4 rounded-lg bg-[#f7f7f7]'
           >
-            <p className="text-center font-black text-2xl text-[#0f172a]">
+            <p className='text-center font-black text-2xl text-[#0f172a]'>
               Sign In
             </p>
-            <div className="space-y-3">
-              <div className="w-full">
+            <div className='space-y-3'>
+              <div className='w-full'>
                 <FormField
                   control={form.control}
-                  name="phone_number"
+                  name='phone_number'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
-                        <Input placeholder="+25198824 * * *" {...field} />
+                        <Input placeholder='+25198824 * * *' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-              <div className="w-full">
+              <div className='w-full'>
                 <FormField
                   control={form.control}
-                  name="password"
+                  name='password'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="* * * * * * * *"
-                          type="password"
+                          placeholder='* * * * * * * *'
+                          type='password'
                           {...field}
                         />
                       </FormControl>
@@ -135,9 +135,9 @@ export default function LoginForm() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <div className="flex justify-end">
-                    <div className="text-sky-500 underline text-sm flex items-center mr-[20px]">
-                      <Link to="#">Forgot password ?</Link>
+                  <div className='flex justify-end'>
+                    <div className='text-sky-500 underline text-sm flex items-center mr-[20px]'>
+                      <Link to='#'>Forgot password ?</Link>
                     </div>
                   </div>
                 </TooltipTrigger>
@@ -155,22 +155,23 @@ export default function LoginForm() {
                   Login
                 </Button> */}
               <TempNotification
-                value="Login"
-                className="w-full"
-                type="submit"
+                value='Login'
+                className='w-full'
+                title={''}
+                description={''}
               />
 
               <div>
-                <Separator className="my-4" />
+                <Separator className='my-4' />
               </div>
-              <div className="flex justify-center text-sm">
-                <p className="w-10/12 text-center font-light	">
-                  By clicking continue, you agree to our{" "}
-                  <Link to="#" className="text-sky-500 underline">
+              <div className='flex justify-center text-sm'>
+                <p className='w-10/12 text-center font-light	'>
+                  By clicking continue, you agree to our{' '}
+                  <Link to='#' className='text-sky-500 underline'>
                     Terms of Service
-                  </Link>{" "}
-                  and{" "}
-                  <Link to="#" className="text-sky-500 underline">
+                  </Link>{' '}
+                  and{' '}
+                  <Link to='#' className='text-sky-500 underline'>
                     Privacy Policy
                   </Link>
                   .

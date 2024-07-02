@@ -1,6 +1,6 @@
 import WelcomePage from "@/components/welcomePage/welcomePage";
 import { Button } from "@/components/ui/button";
-import { CirclePlus, Scan, LockKeyhole } from "lucide-react";
+import { Scan, LockKeyhole } from "lucide-react";
 
 import {
   Drawer,
@@ -16,7 +16,7 @@ import QRCode from "react-qr-code";
 
 // react router
 import { Link } from "react-router-dom";
-import ItemRegistration from "@/components/itemRegistraion/ItemRegistration";
+
 import axios from "axios";
 import { useState } from "react";
 // import QrCodeDisplay from "@/components/qrDisplay/qrCodeDisplay";
@@ -48,16 +48,6 @@ export default function UserHomePage() {
               </div>
             </Button>
           </Link>
-          <ItemRegistration
-            dialogTriggerButton={
-              <Button className="w-full sm:w-full md:w-[48%]" variant="outline">
-                Add Items &nbsp;&nbsp;
-                <div>
-                  <CirclePlus size={18} />
-                </div>
-              </Button>
-            }
-          />
         </div>
       </div>
 
