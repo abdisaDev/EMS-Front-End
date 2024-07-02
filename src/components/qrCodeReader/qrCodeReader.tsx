@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
+import { MoveLeft, MoveRight } from 'lucide-react';
 
 enum Category {
   DEFAULT = '',
@@ -70,27 +71,51 @@ export default function QrCodeReader() {
               />
             ) : (
               <Alert>
-                <AlertTitle>{`${qrResponse.first_name} ${qrResponse.last_name}`}</AlertTitle>
+                <AlertTitle>
+                  {`${qrResponse.first_name} ${qrResponse.last_name}'s Item Lists`}{' '}
+                </AlertTitle>
                 {qrResponse.items.map((item) => {
                   return (
-                    <AlertDescription>
-                      <div>{item.model}</div>
-                      <div>{item.serial_number}</div>
-                      <div>{item.color}</div>
-                      <div>{item.category}</div>
-                      <div>{item.description}</div>
+                    <AlertDescription className='flex flex-col gap-2'>
+                      <div className='flex justify-around border py-[10px] rounded-lg'>
+                        <div>Model</div>
+                        <MoveRight />
+                        <div>{item.model}</div>
+                      </div>
+                      <div className='flex justify-around border py-[10px] rounded-lg'>
+                        <div>Serial Number</div>
+                        <MoveRight />
+                        <div>{item.serial_number}</div>
+                      </div>
+                      <div className='flex justify-around border py-[10px] rounded-lg'>
+                        <div>Color</div>
+                        <MoveRight />
+                        <div>{item.color}</div>
+                      </div>
+                      <div className='flex justify-around border py-[10px] rounded-lg'>
+                        <div>Category</div>
+                        <MoveRight />
+                        <div>{item.category}</div>
+                      </div>
+                      <div className='flex justify-around border py-[10px] rounded-lg'>
+                        <div>Description</div>
+                        <MoveRight />
+                        <div>{item.description}</div>
+                      </div>
                     </AlertDescription>
                   );
                 })}
               </Alert>
             )}
-            <div className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2'>
-              <img
-                src={QrReaderBox}
-                alt='Qr Reader Box'
-                className='animate-pulse animate-infinite animate-ease-in'
-              />
-            </div>
+            {qrResponse !== undefined && (
+              <div className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2'>
+                <img
+                  src={QrReaderBox}
+                  alt='Qr Reader Box'
+                  className='animate-pulse animate-infinite animate-ease-in'
+                />
+              </div>
+            )}
           </div>
         </CardHeader>
 
