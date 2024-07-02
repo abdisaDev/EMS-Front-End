@@ -1,17 +1,18 @@
 import { CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { UserRoundPlus, Scan, LockKeyhole } from 'lucide-react';
+import { UserRoundPlus, Scan, LockKeyhole, LogOutIcon } from 'lucide-react';
 
 // react router
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import WelcomePage from '@/components/welcomePage/welcomePage';
 import ItemRegistration from '@/components/itemRegistraion/ItemRegistration';
 import { CirclePlus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+  
 export default function SecurityGuardHomePage() {
   const [allUsers, setAllUsers] = useState([]);
+  const navigate = useNavigate()
   const fetchUsers = async () => {
     await axios
       .get(`${import.meta.env.VITE_API_ADDRESS}/users`)
@@ -73,6 +74,22 @@ export default function SecurityGuardHomePage() {
               </div>
             </Button>
           </Link>
+        </div>
+        <div className='w-10/12'>
+          <ItemRegistration
+            dialogTriggerButton={
+              <Button className='w-full' onClick={() => {
+                localStorage.clear()
+                navigate("/login")
+              }}>
+                Logout &nbsp;&nbsp;
+                <div>
+                  <LogOutIcon size={18} />
+                </div>
+              </Button>
+            }
+            allUsers={allUsers}
+          />
         </div>
       </div>
 

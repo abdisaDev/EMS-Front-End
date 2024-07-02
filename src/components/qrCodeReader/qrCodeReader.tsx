@@ -16,7 +16,7 @@ import QrReaderBox from '@/assets/images/qrReaderBox.png';
 import { useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MoveRight } from 'lucide-react';
 
 enum Category {
@@ -39,6 +39,7 @@ export default function QrCodeReader() {
   const { toast } = useToast();
 
   const [qrResponse, setQrResponse] = useState<qrResponseType>();
+  const navigate = useNavigate()
 
   const handleScanQrCode = (response: string) => {
     if (response) {
@@ -138,7 +139,9 @@ export default function QrCodeReader() {
                   Cancel
                 </Button>
               </Link>
-              <Button size='sm' className='px-6'>
+              <Button size='sm' className='px-6' onClick={() => {
+                qrResponse && navigate("/verify-user")
+              }}>
                 Verify
               </Button>
             </div>
