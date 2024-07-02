@@ -76,7 +76,7 @@ export default function QrCodeReader() {
                 </AlertTitle>
                 {qrResponse.items.map((item) => {
                   return (
-                    <AlertDescription className='flex flex-col gap-2'>
+                    <AlertDescription className='flex flex-col gap-2 '>
                       <div className='flex justify-around border py-[10px] rounded-lg'>
                         <div>Model</div>
                         <MoveRight />
@@ -107,7 +107,7 @@ export default function QrCodeReader() {
                 })}
               </Alert>
             )}
-            {qrResponse !== undefined && (
+            {qrResponse === undefined && (
               <div className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2'>
                 <img
                   src={QrReaderBox}
