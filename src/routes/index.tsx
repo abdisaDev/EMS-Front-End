@@ -23,7 +23,12 @@ export const routes = [
         <ErrorPage />
       ),
   },
-  { path: '/verify-user', element: <QrCodeReader /> },
+  {
+    path: '/verify-user',
+    element:
+      localStorage.get('access_token') ||
+      (localStorage.getItem('role') === 'security_guard' && <QrCodeReader />),
+  },
   {
     path: '/home',
     element:
@@ -35,6 +40,12 @@ export const routes = [
         <ErrorPage />
       ),
   },
-  { path: '/show-qr', element: <QrCodeDisplay /> },
+
+  {
+    path: '/show-qr',
+    element:
+      localStorage.get('access_token') ||
+      (localStorage.getItem('role') === 'security_guard' && <QrCodeDisplay />),
+  },
   { path: '*', element: <ErrorPage /> },
 ];
