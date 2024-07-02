@@ -27,7 +27,7 @@ export const routes = [
     path: '/verify-user',
     element:
       localStorage.getItem('access_token') ||
-      (localStorage.getItem('role') === 'security_guard' && <QrCodeReader />),
+      localStorage.getItem('role') === 'security_guard' ? <QrCodeReader /> : <ErrorPage />,
   },
   {
     path: '/home',
@@ -45,7 +45,7 @@ export const routes = [
     path: '/show-qr',
     element:
       localStorage.getItem('access_token') ||
-      (localStorage.getItem('role') === 'security_guard' && <QrCodeDisplay />),
+      localStorage.getItem('role') === 'security_guard' ? <QrCodeDisplay /> : <ErrorPage />,
   },
   { path: '*', element: <ErrorPage /> },
 ];
