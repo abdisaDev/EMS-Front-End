@@ -36,5 +36,5 @@ export const routes = [
       ),
   },
   { path: '/show-qr', element: <QrCodeDisplay /> },
-  // { path: '*', element: <ErrorPage /> },
+  { path: '*', element: <ErrorPage /> },
 ];
