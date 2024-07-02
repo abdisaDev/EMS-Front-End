@@ -9,7 +9,7 @@ import ItemRegistration from '@/components/itemRegistraion/ItemRegistration';
 import { CirclePlus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-  
+
 export default function SecurityGuardHomePage() {
   const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate()
@@ -76,20 +76,15 @@ export default function SecurityGuardHomePage() {
           </Link>
         </div>
         <div className='w-10/12'>
-          <ItemRegistration
-            dialogTriggerButton={
-              <Button className='w-full' onClick={() => {
-                localStorage.clear()
-                navigate("/login")
-              }}>
-                Logout &nbsp;&nbsp;
-                <div>
-                  <LogOutIcon size={18} />
-                </div>
-              </Button>
-            }
-            allUsers={allUsers}
-          />
+          <Button className='w-full' onClick={() => {
+            localStorage.clear()
+            navigate("/login")
+          }}>
+            Logout &nbsp;&nbsp;
+            <div>
+              <LogOutIcon size={18} />
+            </div>
+          </Button>
         </div>
       </div>
 
