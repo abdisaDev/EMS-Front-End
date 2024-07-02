@@ -26,7 +26,7 @@ export const routes = [
   {
     path: '/verify-user',
     element:
-      localStorage.get('access_token') ||
+      localStorage.getItem('access_token') ||
       (localStorage.getItem('role') === 'security_guard' && <QrCodeReader />),
   },
   {
