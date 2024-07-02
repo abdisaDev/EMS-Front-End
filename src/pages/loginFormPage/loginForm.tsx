@@ -132,20 +132,22 @@ export default function LoginForm() {
                 />
               </div>
             </div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <div className='flex justify-end'>
-                    <div className='text-sky-500 underline text-sm flex items-center mr-[20px]'>
-                      <Link to='#'>Forgot password ?</Link>
+            <div className='w-full flex justtify-end'>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <div className='flex justify-end'>
+                      <div className='text-sky-500 underline text-sm flex items-center mr-[20px]'>
+                        <Link to='#'>Forgot password ?</Link>
+                      </div>
                     </div>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  This feature isn't available right now.
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    This feature isn't available right now.
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
             <div>
               {/* <Button
                   type="submit"
@@ -166,15 +168,14 @@ export default function LoginForm() {
               </div>
               <div className='flex justify-center text-sm'>
                 <p className='w-10/12 text-center font-light	'>
-                  By clicking continue, you agree to our{' '}
+                  By clicking continue, you agree to our &nbsp;
                   <Link to='#' className='text-sky-500 underline'>
                     Terms of Service
-                  </Link>{' '}
-                  and{' '}
-                  <Link to='#' className='text-sky-500 underline'>
-                    Privacy Policy
                   </Link>
-                  .
+                  &nbsp; and &nbsp;
+                  <Link to='#' className='text-sky-500 underline'>
+                    Privacy Policy.
+                  </Link>
                 </p>
               </div>
             </div>
