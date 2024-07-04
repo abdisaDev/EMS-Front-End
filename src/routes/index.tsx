@@ -27,7 +27,11 @@ export const routes = [
     path: '/verify-user',
     element:
       localStorage.getItem('access_token') ||
-      localStorage.getItem('role') === 'security_guard' ? <QrCodeReader /> : <ErrorPage />,
+      localStorage.getItem('role') === 'security_guard' ? (
+        <QrCodeReader />
+      ) : (
+        <ErrorPage />
+      ),
   },
   {
     path: '/home',
@@ -36,6 +40,8 @@ export const routes = [
         <SecurityGuardHomePage />
       ) : localStorage.getItem('role') === 'user' ? (
         <UserHomePage />
+      ) : localStorage.getItem('role') === 'admin' ? (
+        <RegistrationForm />
       ) : (
         <></>
         // <ErrorPage />
@@ -46,7 +52,11 @@ export const routes = [
     path: '/show-qr',
     element:
       localStorage.getItem('access_token') ||
-      localStorage.getItem('role') === 'security_guard' ? <QrCodeDisplay /> : <ErrorPage />,
+      localStorage.getItem('role') === 'security_guard' ? (
+        <QrCodeDisplay />
+      ) : (
+        <ErrorPage />
+      ),
   },
   { path: '*', element: <ErrorPage /> },
 ];
