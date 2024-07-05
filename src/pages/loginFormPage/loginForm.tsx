@@ -79,9 +79,10 @@ export default function LoginForm() {
         localStorage.setItem('role', response.data.role);
         localStorage.setItem('userId', response.data.userId);
         localStorage.setItem('name', response.data.name);
-        // setTimeout(() => {
-        navigate('/home');
-        // }, 1500)
+
+        localStorage.getItem('role') === 'admin'
+          ? navigate('/register')
+          : navigate('/home');
       });
   };
 
