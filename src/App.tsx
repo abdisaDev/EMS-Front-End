@@ -2,6 +2,7 @@ import { routes } from './routes';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
+import ErrorPage from './pages/errorPage/errorPage';
 
 function App() {
   const router = createBrowserRouter(routes);
@@ -18,10 +19,7 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme='light' storageKey='ems-ui-theme'>
-      <RouterProvider
-        router={router}
-        fallbackElement={<p>Initial Load...</p>}
-      />
+      <RouterProvider router={router} fallbackElement={<ErrorPage />} />
       <Toaster position='bottom-left' richColors />
     </ThemeProvider>
   );
