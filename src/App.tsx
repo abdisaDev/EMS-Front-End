@@ -3,21 +3,27 @@ import { ThemeProvider } from '@/components/theme/theme-provider';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
 import ErrorPage from './pages/errorPage/errorPage';
+import { useEffect } from 'react';
 
-const networkStatusHandler = (status: boolean) => {
-  if (status) {
-    toast.success('Back To Online');
-    toast.dismiss();
-    window.addEventListener('offline', () => networkStatusHandler(false));
-  } else {
-    toast.error("You're Offline", { duration: Infinity });
-  }
-};
 function App() {
   const router = createBrowserRouter(routes);
 
-  window.addEventListener('online', () => networkStatusHandler(true));
-  window.removeEventListener('offline', () => networkStatusHandler(false));
+  useEffect(() => {
+    const handleOnline = () => {
+      toast.success('Back To Online');
+      return toast.dismiss();
+    };
+    const handleOffline = () =>
+      toast.error("You're Offline", { duration: Infinity });
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   return (
     <ThemeProvider defaultTheme='light' storageKey='ems-ui-theme'>
