@@ -18,6 +18,30 @@
       "sizes": "512x512"
     }
   ],
+  "screenshots": [
+    {
+      "src": "./assets/images/ems-sc-pc-1.png",
+      "sizes": "1366x650",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/images/ems-sc-pc-2.png",
+      "sizes": "1366x650",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/images/ems-sc-1.png",
+      "sizes": "216x318",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "./assets/images/ems-sc-2.png",
+      "sizes": "216x318",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
