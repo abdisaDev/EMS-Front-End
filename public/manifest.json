@@ -13,33 +13,31 @@
       "sizes": "192x192"
     },
     {
-      "src": "./assets/splash-screen.gif",
-      "type": "image/gif",
+      "src": "./assets/images/logo512.png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "screenshots": [
     {
       "src": "./assets/images/ems-sc-pc-1.png",
-      "sizes": "393x579",
-      "type": "image/png",
-      "form_factor": "wide"
+      "sizes": "1366x650",
+      "type": "image/png"
     },
     {
       "src": "./assets/images/ems-sc-pc-2.png",
-      "sizes": "638x621",
-      "type": "image/png",
-      "form_factor": "wide"
+      "sizes": "1366x650",
+      "type": "image/png"
     },
     {
       "src": "./assets/images/ems-sc-1.png",
-      "sizes": "393x579",
+      "sizes": "216x318",
       "type": "image/png",
       "form_factor": "narrow"
     },
     {
       "src": "./assets/images/ems-sc-2.png",
-      "sizes": "393x579",
+      "sizes": "216x318",
       "type": "image/png",
       "form_factor": "narrow"
     }
