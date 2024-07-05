@@ -58,5 +58,5 @@ export const routes = [
         <ErrorPage />
       ),
   },
-  // { path: '*', element: <ErrorPage /> },
+  { path: "*", element: <ErrorPage /> },
 ];
