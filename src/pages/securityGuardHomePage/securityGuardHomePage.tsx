@@ -12,7 +12,7 @@ import axios from 'axios';
 
 export default function SecurityGuardHomePage() {
   const [allUsers, setAllUsers] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const fetchUsers = async () => {
     await axios
       .get(`${import.meta.env.VITE_API_ADDRESS}/users`)
@@ -76,10 +76,14 @@ export default function SecurityGuardHomePage() {
           </Link>
         </div>
         <div className='w-10/12'>
-          <Button className='w-full' onClick={() => {
-            localStorage.clear()
-            navigate("/login")
-          }}>
+          <Button
+            className='w-full'
+            variant='destructive'
+            onClick={() => {
+              localStorage.clear();
+              navigate('/login');
+            }}
+          >
             Logout &nbsp;&nbsp;
             <div>
               <LogOutIcon size={18} />
