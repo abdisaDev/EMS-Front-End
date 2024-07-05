@@ -1,7 +1,7 @@
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("/sw.ts") // Replace with the path to your service worker
+      .register("/sw.ts")
       .then((registration) => {
         console.log("Service worker registered: ", registration.scope);
       })
