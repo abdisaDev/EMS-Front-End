@@ -32,6 +32,7 @@ import {
 } from 'react-google-recaptcha-v3';
 import TempNotification from '@/components/tempNotification/tempNotification';
 import axios from 'axios';
+import { Button } from '@/components/ui/button';
 
 export default function LoginForm() {
   // const { executeRecaptcha } = useGoogleReCaptcha();
@@ -79,7 +80,9 @@ export default function LoginForm() {
         localStorage.setItem('role', response.data.role);
         localStorage.setItem('userId', response.data.userId);
         localStorage.setItem('name', response.data.name);
+        // setTimeout(() => {
         navigate('/home');
+        // }, 1500)
       });
   };
 
@@ -132,21 +135,33 @@ export default function LoginForm() {
                 />
               </div>
             </div>
-            <div className='w-full flex justtify-end'>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <div className='flex justify-end'>
-                      <div className='text-sky-500 underline text-sm flex items-center mr-[20px]'>
-                        <Link to='#'>Forgot password ?</Link>
+            <div className='w-full flex justify-between items-center'>
+              <div>
+                <div className='flex justify-end'>
+                  <div className='text-sky-500 text-sm'>
+                    <Button variant='outline' onClick={() => {}}>
+                      Register as Adminstrator &nbsp;
+                      <i className='text-red-500'>*</i>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className='flex justify-end'>
+                        <div className='text-sky-500 underline text-sm flex items-center mr-[20px]'>
+                          <Link to='#'>Forgot password ?</Link>
+                        </div>
                       </div>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    This feature isn't available right now.
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      This feature isn't available right now.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </div>
             <div>
               {/* <Button

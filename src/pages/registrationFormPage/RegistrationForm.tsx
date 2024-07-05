@@ -39,6 +39,8 @@ import { show } from '@/components/otpDialog/showOtpSlice';
 import { ModeToggle } from '@/components/theme/mode-toggle';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { store } from '@/app/store';
+import { useState } from 'react';
 
 enum Role {
   SECURITY_GUARD = 'security_guard',
@@ -59,7 +61,7 @@ const formSchema = z
     role: z.nativeEnum(Role),
     phone_number: z
       .string()
-      .min(9, 'Invalid Phone Number')
+      .min(10, 'Invalid Phone Number')
       .max(10, 'Invalid Phone Number'),
     password: z.string().min(8, 'Minimum 8 Charachters').max(20),
     confirm_password: z.string().min(8, "Password didn't Match.").max(20),
@@ -75,7 +77,7 @@ const formSchema = z
 export default function RegistrationForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [isOtpVerified, setIsOtpVerfied] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -122,6 +124,11 @@ export default function RegistrationForm() {
         return res.data.message;
       });
   };
+
+  store.subscribe(() => {
+    const { isOtpVerified } = store.getState().showOtpDialog;
+    setIsOtpVerfied(isOtpVerified);
+  });
 
   return (
     <>
@@ -194,10 +201,16 @@ export default function RegistrationForm() {
                           <SelectContent>
                             <SelectGroup>
                               <SelectLabel>Roles</SelectLabel>
-                              <SelectItem value='user'>User</SelectItem>
-                              <SelectItem value='security_guard'>
-                                Security Guard
-                              </SelectItem>
+                              {localStorage.getItem('role') === 'admin' ? (
+                                <SelectItem value='security_guard'>
+                                  Security Guard
+                                </SelectItem>
+                              ) : localStorage.getItem('role') ===
+                                'security_guard' ? (
+                                <SelectItem value='user'>User</SelectItem>
+                              ) : (
+                                <></>
+                              )}
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -212,6 +225,7 @@ export default function RegistrationForm() {
                 <FormField
                   control={form.control}
                   name='phone_number'
+                  // disabled={isOtpVerified}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
@@ -232,9 +246,16 @@ export default function RegistrationForm() {
                     <Button
                       type='button'
                       className='w-full'
-                      disabled={form.getValues().phone_number.length !== 10}
+                      disabled={
+                        form.getValues().phone_number?.length !== 10 ||
+                        isOtpVerified
+                      }
                       onClick={() => {
-                        getOtp(form.getValues().phone_number);
+                        const valid_phone_number =
+                          String(form.getValues().phone_number[0]) === '0'
+                            ? form.getValues().phone_number.replace('0', '+251')
+                            : `+251${form.getValues().phone_number}`;
+                        getOtp(valid_phone_number);
                         dispatch(show());
                       }}
                     >
@@ -309,11 +330,7 @@ export default function RegistrationForm() {
                 </div>
               </div>
             </div>
-            <Button
-              type='submit'
-              className='w-full'
-              // disabled={!formSchema.safeParse(form.getValues()).success}
-            >
+            <Button type='submit' className='w-full' disabled={!isOtpVerified}>
               Register
             </Button>
           </form>
