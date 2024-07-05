@@ -26,6 +26,7 @@ import {
   SelectGroup,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import { toast, Toaster } from 'sonner';
 
 // icons
 import { KeyRound } from 'lucide-react';
@@ -35,12 +36,12 @@ import { useDispatch } from 'react-redux';
 
 // custom component
 import { OtpDialog } from '@/components/otpDialog/OtpDialog';
-import { show } from '@/components/otpDialog/showOtpSlice';
 import { ModeToggle } from '@/components/theme/mode-toggle';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { store } from '@/app/store';
 import { useState } from 'react';
+import { hide, show } from '@/components/otpDialog/showOtpSlice';
 
 enum Role {
   SECURITY_GUARD = 'security_guard',
@@ -78,6 +79,9 @@ export default function RegistrationForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOtpVerified, setIsOtpVerfied] = useState<boolean>(false);
+
+  const [openOtpDialog, setOpenOtpDialog] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -113,16 +117,53 @@ export default function RegistrationForm() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirm_password, ...payload } = values;
     registerUser(payload);
+    setIsOtpVerfied(false);
   };
 
   const getOtp = async (phone_number: string) => {
-    return await axios
+    await axios
       .post(`${import.meta.env.VITE_API_ADDRESS}/otp/get`, {
         phone_number,
       })
-      .then((res) => {
-        return res.data.message;
+      .then((response) => {
+        toastHandler({
+          title: 'OTP Response',
+          description: response.data.message,
+          status: String(response.data.status)[0] === '2' ? true : false,
+        });
+        setOpenOtpDialog(true);
+      })
+      .catch((error) => {
+        toastHandler({
+          title: 'OTP Response',
+          description: error.response.data.message,
+          status: String(error.response.data.status)[0] === '2' ? true : false,
+        });
+        setOpenOtpDialog(false);
       });
+  };
+
+  const toastHandler = (props: {
+    title: string;
+    description: string;
+    status: boolean;
+  }) => {
+    if (props.status) {
+      return toast.success(props.title, {
+        description: props.description,
+        action: {
+          label: 'Close',
+          onClick: () => {},
+        },
+      });
+    }
+    return toast.error(props.title, {
+      description: props.description,
+      action: {
+        label: 'Close',
+        onClick: () => {},
+      },
+    });
   };
 
   store.subscribe(() => {
@@ -230,7 +271,11 @@ export default function RegistrationForm() {
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
-                        <Input placeholder='+25198824 * * * ' {...field} />
+                        <Input
+                          placeholder='+25198824 * * * '
+                          {...field}
+                          readOnly={isOtpVerified}
+                        />
                       </FormControl>
                       {/* <FormDescription>
                 This is your public display name.
@@ -241,13 +286,14 @@ export default function RegistrationForm() {
                 />
               </div>
               <div className='flex items-end w-[48%]'>
+                <Toaster position='bottom-left' richColors />
                 <OtpDialog
                   dialogTrigerElement={
                     <Button
                       type='button'
                       className='w-full'
                       disabled={
-                        form.getValues().phone_number?.length !== 10 ||
+                        form.getValues().phone_number?.length !== 10 &&
                         isOtpVerified
                       }
                       onClick={() => {
@@ -256,7 +302,12 @@ export default function RegistrationForm() {
                             ? form.getValues().phone_number.replace('0', '+251')
                             : `+251${form.getValues().phone_number}`;
                         getOtp(valid_phone_number);
-                        dispatch(show());
+
+                        if (openOtpDialog) {
+                          dispatch(show());
+                        } else {
+                          dispatch(hide());
+                        }
                       }}
                     >
                       Get Code &nbsp; <KeyRound size={15} />

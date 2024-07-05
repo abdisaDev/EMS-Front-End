@@ -26,6 +26,7 @@ export function OtpDialog(props: {
     | undefined;
 }) {
   const [otp, setOtp] = useState('');
+  const [showOtpDialog, setShowOtpDialog] = useState(false);
   const dispatch = useDispatch();
 
   store.subscribe(() => {
@@ -43,37 +44,43 @@ export function OtpDialog(props: {
         return res.data.message;
       });
   };
+  store.subscribe(() => {
+    const { value } = store.getState().showOtpDialog;
+    setShowOtpDialog(value);
+  });
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         {props.dialogTrigerElement}
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Verify Your Phone Number</AlertDialogTitle>
-          <AlertDialogDescription className='flex justify-center'>
-            <OtpField />
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel
-            onClick={() => {
-              dispatch(isOtpVerified(false));
-            }}
-          >
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => {
-              verifyOtp(otp);
-              dispatch(isOtpVerified(false));
-            }}
-          >
-            Continue
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      {showOtpDialog && (
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Verify Your Phone Number</AlertDialogTitle>
+            <AlertDialogDescription className='flex justify-center'>
+              <OtpField />
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                dispatch(isOtpVerified(false));
+              }}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                verifyOtp(otp);
+                dispatch(isOtpVerified(false));
+              }}
+            >
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      )}
     </AlertDialog>
   );
 }
