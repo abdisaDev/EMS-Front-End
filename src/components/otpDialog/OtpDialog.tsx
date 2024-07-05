@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 // shadcn ui components
 import {
@@ -11,19 +11,22 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 // custom components
-import { OtpField } from "../otpField/otpField";
-import axios from "axios";
-import { store } from "@/app/store";
+import { OtpField } from '../otpField/otpField';
+import axios from 'axios';
+import { store } from '@/app/store';
+import { useDispatch } from 'react-redux';
+import { isOtpVerified } from './showOtpSlice';
 
 export function OtpDialog(props: {
   dialogTrigerElement:
     | React.ReactElement<unknown, string | React.JSXElementConstructor<unknown>>
     | undefined;
 }) {
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState('');
+  const dispatch = useDispatch();
 
   store.subscribe(() => {
     const { otp } = store.getState().showOtpDialog;
@@ -31,13 +34,12 @@ export function OtpDialog(props: {
   });
 
   const verifyOtp = async (otp: string) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     return await axios
       .post(`${import.meta.env.VITE_API_ADDRESS}/otp/verify`, {
         otp,
       })
       .then((res) => {
+        dispatch(isOtpVerified(res.data.status == 200 ? true : false));
         return res.data.message;
       });
   };
@@ -50,16 +52,22 @@ export function OtpDialog(props: {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Verify Your Phone Number</AlertDialogTitle>
-          <AlertDialogDescription className="flex justify-center">
+          <AlertDialogDescription className='flex justify-center'>
             <OtpField />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel
+            onClick={() => {
+              dispatch(isOtpVerified(false));
+            }}
+          >
+            Cancel
+          </AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              console.log(otp);
               verifyOtp(otp);
+              dispatch(isOtpVerified(false));
             }}
           >
             Continue

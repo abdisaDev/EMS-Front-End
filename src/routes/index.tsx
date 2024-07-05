@@ -1,41 +1,47 @@
-import RegistrationForm from '@/pages/registrationFormPage/RegistrationForm';
-import LoginForm from '@/pages/loginFormPage/loginForm';
-import LandingPage from '@/pages/landingPage';
-import QrCodeReader from '@/components/qrCodeReader/qrCodeReader';
-import SecurityGuardHomePage from '@/pages/securityGuardHomePage/securityGuardHomePage';
-import QrCodeDisplay from '@/components/qrDisplay/qrCodeDisplay';
-import UserHomePage from '@/pages/userHomePage/userHomePage';
-import ErrorPage from '@/pages/errorPage/errorPage';
+import RegistrationForm from "@/pages/registrationFormPage/RegistrationForm";
+import LoginForm from "@/pages/loginFormPage/loginForm";
+import LandingPage from "@/pages/landingPage";
+import QrCodeReader from "@/components/qrCodeReader/qrCodeReader";
+import SecurityGuardHomePage from "@/pages/securityGuardHomePage/securityGuardHomePage";
+import QrCodeDisplay from "@/components/qrDisplay/qrCodeDisplay";
+import UserHomePage from "@/pages/userHomePage/userHomePage";
+import ErrorPage from "@/pages/errorPage/errorPage";
 
 export const routes = [
-  { path: '/', element: <LandingPage /> },
+  { path: "/", element: <LandingPage /> },
   {
-    path: '/login',
+    path: "/login",
     element: <LoginForm />,
   },
   {
-    path: '/register',
+    path: "/register",
     element:
-      localStorage.getItem('role') === 'security_guard' ||
-      localStorage.getItem('role') === 'admin' ? (
+      localStorage.getItem("role") === "security_guard" ||
+      localStorage.getItem("role") === "admin" ? (
         <RegistrationForm />
       ) : (
         <ErrorPage />
       ),
   },
   {
-    path: '/verify-user',
+    path: "/verify-user",
     element:
-      localStorage.getItem('access_token') ||
-      localStorage.getItem('role') === 'security_guard' ? <QrCodeReader /> : <ErrorPage />,
+      localStorage.getItem("access_token") ||
+      localStorage.getItem("role") === "security_guard" ? (
+        <QrCodeReader />
+      ) : (
+        <ErrorPage />
+      ),
   },
   {
-    path: '/home',
+    path: "/home",
     element:
-      localStorage.getItem('role') === 'security_guard' ? (
+      localStorage.getItem("role") === "security_guard" ? (
         <SecurityGuardHomePage />
-      ) : localStorage.getItem('role') === 'user' ? (
+      ) : localStorage.getItem("role") === "user" ? (
         <UserHomePage />
+      ) : localStorage.getItem("role") === "admin" ? (
+        <RegistrationForm />
       ) : (
         <></>
         // <ErrorPage />
@@ -43,10 +49,14 @@ export const routes = [
   },
 
   {
-    path: '/show-qr',
+    path: "/show-qr",
     element:
-      localStorage.getItem('access_token') ||
-      localStorage.getItem('role') === 'security_guard' ? <QrCodeDisplay /> : <ErrorPage />,
+      localStorage.getItem("access_token") ||
+      localStorage.getItem("role") === "security_guard" ? (
+        <QrCodeDisplay />
+      ) : (
+        <ErrorPage />
+      ),
   },
-  { path: '*', element: <ErrorPage /> },
+  { path: "*", element: <ErrorPage /> },
 ];
