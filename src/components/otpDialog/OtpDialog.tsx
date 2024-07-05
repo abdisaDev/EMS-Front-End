@@ -19,6 +19,7 @@ import axios from 'axios';
 import { store } from '@/app/store';
 import { useDispatch } from 'react-redux';
 import { isOtpVerified } from './showOtpSlice';
+import { toast } from 'sonner';
 
 export function OtpDialog(props: {
   dialogTrigerElement:
@@ -39,9 +40,20 @@ export function OtpDialog(props: {
       .post(`${import.meta.env.VITE_API_ADDRESS}/otp/verify`, {
         otp,
       })
-      .then((res) => {
-        dispatch(isOtpVerified(res.data.status == 200 ? true : false));
-        return res.data.message;
+      .then((response) => {
+        dispatch(isOtpVerified(response.data.status == 200 ? true : false));
+        toastHandler({
+          title: 'OTP Response',
+          description: response.data.message,
+          status: String(response.data.status)[0] === '2' ? true : false,
+        });
+      })
+      .catch((error) => {
+        toastHandler({
+          title: 'OTP Response',
+          description: error.response.data.message,
+          status: String(error.response.data.status)[0] === '2' ? true : false,
+        });
       });
   };
   store.subscribe(() => {
@@ -49,6 +61,28 @@ export function OtpDialog(props: {
     setShowOtpDialog(value);
   });
 
+  const toastHandler = (props: {
+    title: string;
+    description: string;
+    status: boolean;
+  }) => {
+    if (props.status) {
+      return toast.success(props.title, {
+        description: props.description,
+        action: {
+          label: 'Close',
+          onClick: () => {},
+        },
+      });
+    }
+    return toast.error(props.title, {
+      description: props.description,
+      action: {
+        label: 'Close',
+        onClick: () => {},
+      },
+    });
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

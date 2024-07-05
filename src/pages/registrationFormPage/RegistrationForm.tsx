@@ -29,7 +29,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { toast, Toaster } from 'sonner';
 
 // icons
-import { KeyRound } from 'lucide-react';
+import { KeyRound, LogOutIcon } from 'lucide-react';
 
 // redux-toolkit
 import { useDispatch } from 'react-redux';
@@ -80,8 +80,6 @@ export default function RegistrationForm() {
   const navigate = useNavigate();
   const [isOtpVerified, setIsOtpVerfied] = useState<boolean>(false);
 
-  const [openOtpDialog, setOpenOtpDialog] = useState<boolean>(false);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -131,7 +129,7 @@ export default function RegistrationForm() {
           description: response.data.message,
           status: String(response.data.status)[0] === '2' ? true : false,
         });
-        setOpenOtpDialog(true);
+        dispatch(show());
       })
       .catch((error) => {
         toastHandler({
@@ -139,7 +137,7 @@ export default function RegistrationForm() {
           description: error.response.data.message,
           status: String(error.response.data.status)[0] === '2' ? true : false,
         });
-        setOpenOtpDialog(false);
+        dispatch(hide());
       });
   };
 
@@ -302,12 +300,6 @@ export default function RegistrationForm() {
                             ? form.getValues().phone_number.replace('0', '+251')
                             : `+251${form.getValues().phone_number}`;
                         getOtp(valid_phone_number);
-
-                        if (openOtpDialog) {
-                          dispatch(show());
-                        } else {
-                          dispatch(hide());
-                        }
                       }}
                     >
                       Get Code &nbsp; <KeyRound size={15} />
@@ -381,9 +373,28 @@ export default function RegistrationForm() {
                 </div>
               </div>
             </div>
-            <Button type='submit' className='w-full' disabled={!isOtpVerified}>
-              Register
-            </Button>
+            <div className='flex flex-col gap-2'>
+              <Button
+                type='submit'
+                className='w-full'
+                disabled={!isOtpVerified}
+              >
+                Register
+              </Button>
+              {localStorage.getItem('role') === 'admin' && (
+                <Button
+                  type='button'
+                  variant='destructive'
+                  className='w-full'
+                  onClick={() => {
+                    localStorage.clear();
+                    navigate('/');
+                  }}
+                >
+                  Logout &nbsp; <LogOutIcon size={16} />
+                </Button>
+              )}
+            </div>
           </form>
         </Form>
       </div>
