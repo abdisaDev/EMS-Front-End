@@ -73,6 +73,14 @@ const formSchema = z
 
 // not working because of refining the formSchema
 // const phoneNumber = formSchema.pick({ phone_number: true });
+const initailFormValues = {
+  first_name: "",
+  last_name: "",
+  phone_number: "",
+  role: Role.DEFAULT,
+  password: "",
+  confirm_password: "",
+};
 
 export default function RegistrationForm() {
   const dispatch = useDispatch();
@@ -81,14 +89,7 @@ export default function RegistrationForm() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      first_name: "",
-      last_name: "",
-      phone_number: "",
-      role: Role.DEFAULT,
-      password: "",
-      confirm_password: "",
-    },
+    defaultValues: initailFormValues,
   });
 
   const registerUser = async (payload: {
@@ -102,9 +103,11 @@ export default function RegistrationForm() {
       .post(`${import.meta.env.VITE_API_ADDRESS}/user/register`, payload)
       .then(function (response: unknown) {
         console.log(response);
-        form.setValue("phone_number", "");
+        location.reload();
       })
-      .catch(function (error: unknown) {});
+      .catch(function (error: unknown) {
+        console.log(error);
+      });
   };
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {

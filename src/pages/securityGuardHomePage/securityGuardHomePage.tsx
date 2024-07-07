@@ -1,6 +1,6 @@
 import { CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { UserRoundPlus, Scan, LockKeyhole, LogOutIcon } from "lucide-react";
+import { UserRoundPlus, Scan, LogOutIcon } from "lucide-react";
 
 // react router
 import { Link, useNavigate } from "react-router-dom";
@@ -34,36 +34,30 @@ export default function SecurityGuardHomePage() {
     <div className="h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
       <WelcomePage user={localStorage.getItem("name")!} />
       <div className="w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2">
-        <div className="w-10/12 md:space-x-[4%]">
-          <Link to="/verify-user">
-            <Button className="w-full sm:w-full md:w-[48%]" variant="outline">
-              Scan QR Code &nbsp;&nbsp;
-              <div>
-                <Scan size={18} />
-              </div>
-            </Button>
-          </Link>
-          <Link to="/verify-user">
-            <Button className="w-full sm:w-full md:w-[48%]" variant="outline">
-              Security Code &nbsp;&nbsp;
-              <div>
-                <LockKeyhole size={18} />
-              </div>
-            </Button>
-          </Link>
-        </div>
-        <div className="w-10/12">
-          <ItemRegistration
-            dialogTriggerButton={
-              <Button className="w-full">
-                Add Items &nbsp;&nbsp;
+        <div className="flex w-10/12 md:space-x-[4%]">
+          <div className="w-full sm:w-full md:w-[48%] mb-2">
+            <Link to="/verify-user">
+              <Button variant="outline" className="w-full">
+                Scan QR Code &nbsp;&nbsp;
                 <div>
-                  <CirclePlus size={18} />
+                  <Scan size={18} />
                 </div>
               </Button>
-            }
-            allUsers={allUsers}
-          />
+            </Link>
+          </div>
+          <div className="w-full sm:w-full md:w-[48%]">
+            <ItemRegistration
+              dialogTriggerButton={
+                <Button className="w-full">
+                  Add Items &nbsp;&nbsp;
+                  <div>
+                    <CirclePlus size={18} />
+                  </div>
+                </Button>
+              }
+              allUsers={allUsers}
+            />
+          </div>
         </div>
         <div className="w-10/12">
           <Link to="/register">
