@@ -102,12 +102,9 @@ export default function RegistrationForm() {
       .post(`${import.meta.env.VITE_API_ADDRESS}/user/register`, payload)
       .then(function (response: unknown) {
         console.log(response);
-        form.reset;
-        navigate("/login");
+        form.setValue("phone_number", "");
       })
-      .catch(function (error: unknown) {
-        console.log(error);
-      });
+      .catch(function (error: unknown) {});
   };
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -118,25 +115,29 @@ export default function RegistrationForm() {
   };
 
   const getOtp = async (phone_number: string) => {
-    await axios
+    return await axios
       .post(`${import.meta.env.VITE_API_ADDRESS}/otp/get`, {
         phone_number,
       })
-      .then((response) => {
+      .then(async (response) => {
+        const { message, status } = await response.data;
         toastHandler({
           title: "OTP Response",
-          description: response.data.message,
-          status: String(response.data.status)[0] === "2" ? true : false,
+          description: message,
+          status: String(status)[0] === "2" ? true : false,
         });
-        dispatch(show());
+        status < 400 && dispatch(show());
       })
-      .catch((error) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .catch(async (error) => {
+        const { message, statusCode } = await error.response.data;
         toastHandler({
           title: "OTP Response",
-          description: error.response.data.message,
-          status: String(error.response.data.status)[0] === "2" ? true : false,
+          description: message,
+          status: String(status)[0] === "2" ? true : false,
         });
-        dispatch(hide());
+        console.log(statusCode);
+        Number(statusCode) >= 400 && dispatch(hide());
       });
   };
 
@@ -305,7 +306,7 @@ export default function RegistrationForm() {
                         form.getValues().phone_number?.length !== 10 &&
                         isOtpVerified
                       }
-                      onClick={() => {
+                      onClick={async () => {
                         const valid_phone_number =
                           String(form.getValues().phone_number[0]) === "0"
                             ? form.getValues().phone_number.replace("0", "+251")
