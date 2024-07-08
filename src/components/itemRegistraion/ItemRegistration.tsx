@@ -100,7 +100,7 @@ export default function ItemRegistration(props: {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <AlertDialogDescription>
-              <div>
+              <div className='flex flex-col gap-y-2'>
                 <div>
                   <FormField
                     control={form.control}
