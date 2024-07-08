@@ -29,14 +29,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { toast, Toaster } from 'sonner';
 
 // icons
-import { KeyRound, LogOutIcon } from 'lucide-react';
+import { KeyRound, LogOutIcon, Undo2 } from 'lucide-react';
 
 // redux-toolkit
 import { useDispatch } from 'react-redux';
 
 // custom component
 import { OtpDialog } from '@/components/otpDialog/OtpDialog';
-import { ModeToggle } from '@/components/theme/mode-toggle';
+// import { ModeToggle } from '@/components/theme/mode-toggle';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { store } from '@/app/store';
@@ -104,7 +104,6 @@ export default function RegistrationForm() {
       .then(function (response: unknown) {
         console.log(response);
         form.reset;
-        navigate('/login');
       })
       .catch(function (error: unknown) {
         console.log(error);
@@ -177,12 +176,24 @@ export default function RegistrationForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className='relative space-y-5 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 py-3 px-4 rounded-lg bg-[#f7f7f7]'
           >
-            <div className='absolute top-5 right-5'>
-              <ModeToggle />
+            <div className='flex items-center justify-center mt-2 h-full'>
+              <div className='absolute left-5'>
+                <Button
+                  size='icon'
+                  onClick={() => {
+                    navigate('/home');
+                  }}
+                >
+                  <Undo2 className='mx-2' />
+                </Button>
+              </div>
+              <div>
+                <p className='text-center font-black text-2xl text-[#0f172a]'>
+                  Sign Up
+                </p>
+              </div>
             </div>
-            <p className='text-center font-black text-2xl text-[#0f172a]'>
-              Sign Up
-            </p>
+            <hr className='relative -top-[5px]' />
             <div className='flex justify-between'>
               <div className='w-[48%]'>
                 <FormField

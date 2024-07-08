@@ -46,6 +46,7 @@ export default function LoginForm() {
   //   // backend implementaiton goes here
   //   console.log(token);
   // }, [executeRecaptcha]);
+
   const navigate = useNavigate();
   const formSchema = z.object({
     phone_number: z
@@ -59,6 +60,7 @@ export default function LoginForm() {
     const { phone_number, password } = values;
     await signIn(phone_number, password);
   }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,18 +70,18 @@ export default function LoginForm() {
   });
 
   const signIn = async (phone_number: string, password: string) => {
-    await axios
+    return await axios
       .post(`${import.meta.env.VITE_API_ADDRESS}/auth/login`, {
         phone_number,
         password,
       })
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem('access_token', response.data.access_token);
-        localStorage.setItem('role', response.data.role);
-        localStorage.setItem('userId', response.data.userId);
-        localStorage.setItem('name', response.data.name);
-
+      .then(async (response) => {
+        const { access_token, role, userId, name } = await response.data;
+        localStorage.clear();
+        localStorage.setItem('access_token', access_token);
+        localStorage.setItem('role', role);
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('name', name);
         localStorage.getItem('role') === 'admin'
           ? navigate('/register')
           : navigate('/home');
