@@ -39,7 +39,7 @@ export const routes = [
         <SecurityGuardHomePage />
       ) : localStorage.getItem('role') === 'user' ? (
         <UserHomePage />
-      ) : localStorage.getItem('role') === 'admin' ||
+      ) : localStorage.getItem('role') === 'admin' || // until the admins home page done
         !localStorage.getItem('access_token') ? (
         <ErrorPage />
       ) : (
