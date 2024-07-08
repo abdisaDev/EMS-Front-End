@@ -130,8 +130,17 @@ export default function QrCodeReader() {
             </div>
             <div className='flex justify-end w-full space-x-2'>
               <div className='flex justify-center items-center w-full '>
-                <p className='animate-bounce animate-infinite animate-ease-in animate-ease-out'>
-                  <Badge>Scanning . . .</Badge>
+                <p
+                  className={`${
+                    !qrResponse &&
+                    'animate-bounce animate-infinite animate-ease-in animate-ease-out'
+                  }`}
+                >
+                  {qrResponse ? (
+                    <Badge className='bg-green-500'>Scanned!</Badge>
+                  ) : (
+                    <Badge>Scanning . . .</Badge>
+                  )}
                 </p>
               </div>
               <Link to='/home'>
