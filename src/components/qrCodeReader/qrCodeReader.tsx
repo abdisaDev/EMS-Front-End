@@ -39,7 +39,7 @@ export default function QrCodeReader() {
   const { toast } = useToast();
 
   const [qrResponse, setQrResponse] = useState<qrResponseType>();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleScanQrCode = (response: string) => {
     if (response) {
@@ -134,14 +134,19 @@ export default function QrCodeReader() {
                   <Badge>Scanning . . .</Badge>
                 </p>
               </div>
-              <Link to='/'>
+              <Link to='/home'>
                 <Button variant='destructive' size='sm' className='px-4'>
                   Cancel
                 </Button>
               </Link>
-              <Button size='sm' className='px-6' onClick={() => {
-                qrResponse && navigate("/verify-user")
-              }}>
+              <Button
+                size='sm'
+                className='px-6'
+                onClick={() => {
+                  console.log('clicked');
+                  qrResponse && navigate('/verify-user');
+                }}
+              >
                 Verify
               </Button>
             </div>
