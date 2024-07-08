@@ -107,7 +107,7 @@ export default function ItemRegistration(props: {
                     name='user'
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Category</FormLabel>
+                        <FormLabel>Select User</FormLabel>
                         <FormControl>
                           <Select
                             {...field}
@@ -140,6 +140,32 @@ export default function ItemRegistration(props: {
                                   )
                                 );
                               })}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name='category'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <Select
+                            {...field}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder='Category' />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value='car'>Car</SelectItem>
+                              <SelectItem value='computer'>Computer</SelectItem>
                             </SelectContent>
                           </Select>
                         </FormControl>
@@ -184,32 +210,6 @@ export default function ItemRegistration(props: {
                         <FormLabel>Serial Number</FormLabel>
                         <FormControl>
                           <Input placeholder='Serial Number' {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div>
-                  <FormField
-                    control={form.control}
-                    name='category'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Category</FormLabel>
-                        <FormControl>
-                          <Select
-                            {...field}
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder='Category' />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value='car'>Car</SelectItem>
-                              <SelectItem value='computer'>Computer</SelectItem>
-                            </SelectContent>
-                          </Select>
                         </FormControl>
                       </FormItem>
                     )}
