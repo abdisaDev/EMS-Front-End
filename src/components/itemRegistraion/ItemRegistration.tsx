@@ -215,7 +215,7 @@ export default function ItemRegistration(props: {
                     )}
                   />
                 </div>
-                <div>
+                <div className='mb-2'>
                   <FormField
                     control={form.control}
                     name='description'
