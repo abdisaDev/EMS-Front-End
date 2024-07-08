@@ -36,7 +36,6 @@ import { useDispatch } from 'react-redux';
 
 // custom component
 import { OtpDialog } from '@/components/otpDialog/OtpDialog';
-// import { ModeToggle } from '@/components/theme/mode-toggle';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { store } from '@/app/store';
@@ -74,6 +73,14 @@ const formSchema = z
 
 // not working because of refining the formSchema
 // const phoneNumber = formSchema.pick({ phone_number: true });
+const initailFormValues = {
+  first_name: '',
+  last_name: '',
+  phone_number: '',
+  role: Role.DEFAULT,
+  password: '',
+  confirm_password: '',
+};
 
 export default function RegistrationForm() {
   const dispatch = useDispatch();
@@ -82,14 +89,7 @@ export default function RegistrationForm() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      first_name: '',
-      last_name: '',
-      phone_number: '',
-      role: Role.DEFAULT,
-      password: '',
-      confirm_password: '',
-    },
+    defaultValues: initailFormValues,
   });
 
   const registerUser = async (payload: {
@@ -103,7 +103,7 @@ export default function RegistrationForm() {
       .post(`${import.meta.env.VITE_API_ADDRESS}/user/register`, payload)
       .then(function (response: unknown) {
         console.log(response);
-        form.reset;
+        location.reload();
       })
       .catch(function (error: unknown) {
         console.log(error);
@@ -118,25 +118,29 @@ export default function RegistrationForm() {
   };
 
   const getOtp = async (phone_number: string) => {
-    await axios
+    return await axios
       .post(`${import.meta.env.VITE_API_ADDRESS}/otp/get`, {
         phone_number,
       })
-      .then((response) => {
+      .then(async (response) => {
+        const { message, status } = await response.data;
         toastHandler({
           title: 'OTP Response',
-          description: response.data.message,
-          status: String(response.data.status)[0] === '2' ? true : false,
+          description: message,
+          status: String(status)[0] === '2' ? true : false,
         });
-        dispatch(show());
+        status < 400 && dispatch(show());
       })
-      .catch((error) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .catch(async (error) => {
+        const { message, statusCode } = await error.response.data;
         toastHandler({
           title: 'OTP Response',
-          description: error.response.data.message,
-          status: String(error.response.data.status)[0] === '2' ? true : false,
+          description: message,
+          status: String(status)[0] === '2' ? true : false,
         });
-        dispatch(hide());
+        console.log(statusCode);
+        Number(statusCode) >= 400 && dispatch(hide());
       });
   };
 
@@ -176,15 +180,15 @@ export default function RegistrationForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className='relative space-y-5 w-10/12 sm:w-8/12 md:w-6/12 lg:w-4/12 py-3 px-4 rounded-lg bg-[#f7f7f7]'
           >
-            <div className='flex items-center justify-center mt-2 h-full'>
-              <div className='absolute left-5'>
+            <div className='flex items-center justify-center my-2'>
+              <div className='absolute left-4'>
                 <Button
                   size='icon'
                   onClick={() => {
                     navigate('/home');
                   }}
                 >
-                  <Undo2 className='mx-2' />
+                  <Undo2 />
                 </Button>
               </div>
               <div>
@@ -193,7 +197,7 @@ export default function RegistrationForm() {
                 </p>
               </div>
             </div>
-            <hr className='relative -top-[5px]' />
+            <hr />
             <div className='flex justify-between'>
               <div className='w-[48%]'>
                 <FormField
@@ -305,7 +309,7 @@ export default function RegistrationForm() {
                         form.getValues().phone_number?.length !== 10 &&
                         isOtpVerified
                       }
-                      onClick={() => {
+                      onClick={async () => {
                         const valid_phone_number =
                           String(form.getValues().phone_number[0]) === '0'
                             ? form.getValues().phone_number.replace('0', '+251')
