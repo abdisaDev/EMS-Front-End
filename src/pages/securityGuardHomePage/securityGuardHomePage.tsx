@@ -1,14 +1,14 @@
-import { CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { UserRoundPlus, Scan, LogOutIcon } from "lucide-react";
+import { CardFooter } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { UserRoundPlus, Scan, LogOutIcon } from 'lucide-react';
 
 // react router
-import { Link, useNavigate } from "react-router-dom";
-import WelcomePage from "@/components/welcomePage/welcomePage";
-import ItemRegistration from "@/components/itemRegistraion/ItemRegistration";
-import { CirclePlus } from "lucide-react";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Link, useNavigate } from 'react-router-dom';
+import WelcomePage from '@/components/welcomePage/welcomePage';
+import ItemRegistration from '@/components/itemRegistraion/ItemRegistration';
+import { CirclePlus } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function SecurityGuardHomePage() {
   const [allUsers, setAllUsers] = useState([]);
@@ -31,13 +31,13 @@ export default function SecurityGuardHomePage() {
     fetchUsers();
   }, []);
   return (
-    <div className="h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
-      <WelcomePage user={localStorage.getItem("name")!} />
-      <div className="w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2">
-        <div className="flex w-10/12 md:space-x-[4%]">
-          <div className="w-full sm:w-full md:w-[48%] mb-2">
-            <Link to="/verify-user">
-              <Button variant="outline" className="w-full">
+    <div className='h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]'>
+      <WelcomePage user={localStorage.getItem('name')!} />
+      <div className='w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2'>
+        <div className='flex flex-col md:flex-row sm:flex-col space-y-[10px] sm:space-y-[10px] sm:space-y-0 w-10/12 md:space-x-[10px]'>
+          <div className='w-full '>
+            <Link to='/verify-user'>
+              <Button variant='outline' className='w-full'>
                 Scan QR Code &nbsp;&nbsp;
                 <div>
                   <Scan size={18} />
@@ -45,10 +45,10 @@ export default function SecurityGuardHomePage() {
               </Button>
             </Link>
           </div>
-          <div className="w-full sm:w-full md:w-[48%]">
+          <div className='w-full '>
             <ItemRegistration
               dialogTriggerButton={
-                <Button className="w-full">
+                <Button className='w-full'>
                   Add Items &nbsp;&nbsp;
                   <div>
                     <CirclePlus size={18} />
@@ -59,23 +59,23 @@ export default function SecurityGuardHomePage() {
             />
           </div>
         </div>
-        <div className="w-10/12">
-          <Link to="/register">
-            <Button className="w-full">
-              Register New User &nbsp;&nbsp;{" "}
+        <div className='w-10/12'>
+          <Link to='/register'>
+            <Button className='w-full'>
+              Register New User &nbsp;&nbsp;{' '}
               <div>
                 <UserRoundPlus size={18} />
               </div>
             </Button>
           </Link>
         </div>
-        <div className="w-10/12">
+        <div className='w-10/12'>
           <Button
-            className="w-full"
-            variant="destructive"
+            className='w-full'
+            variant='destructive'
             onClick={() => {
               localStorage.clear();
-              navigate("/login");
+              navigate('/login');
             }}
           >
             Logout &nbsp;&nbsp;
