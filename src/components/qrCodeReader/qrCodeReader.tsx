@@ -5,8 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ToastAction } from '@/components/ui/toast';
-import { useToast } from '@/components/ui/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 // @ts-expect-error -> the below package didn't have any declarations
@@ -16,9 +14,10 @@ import QrReaderBox from '@/assets/images/qrReaderBox.png';
 import { useState } from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { MoveRight } from 'lucide-react';
 import axios from 'axios';
+import { toast as sonnerToast } from 'sonner';
 
 enum Category {
   DEFAULT = '',
@@ -38,17 +37,16 @@ interface qrResponseType {
   }[];
 }
 export default function QrCodeReader() {
-  const { toast } = useToast();
-
   const [qrResponse, setQrResponse] = useState<qrResponseType>();
-  const navigate = useNavigate();
 
   const handleScanQrCode = (response: string) => {
     if (response) {
-      toast({
-        title: `QR Read Successfully - ${response}`,
-        description: 'Check the detail inforamation ',
-        action: <ToastAction altText='Close Notification'>Close</ToastAction>,
+      sonnerToast.success(`QR Read Successfully!`, {
+        description: 'Check the detail inforamation before admitting.',
+        action: {
+          label: 'Close',
+          onClick: () => {},
+        },
       });
       setQrResponse(JSON.parse(response));
     }
@@ -144,19 +142,28 @@ export default function QrCodeReader() {
               <Button
                 size='sm'
                 className='px-6'
-                // disabled={!qrResponse} // uncomment this
+                disabled={!qrResponse}
                 onClick={() => {
                   const { id, ...rest } = qrResponse!;
+                  const payload = rest.items.map((item) => {
+                    return item;
+                  });
                   axios
                     .post(
-                      `${import.meta.env.VITE_API_ADDRESS}/${id}/verify-items`,
-                      rest.items
+                      `${
+                        import.meta.env.VITE_API_ADDRESS
+                      }/user/${id}/verify-items`,
+                      payload
                     )
-                    .then((response) => {
-                      console.log(response);
-                    })
-                    .catch((error) => {
-                      console.log(error);
+                    .then(async (response) => {
+                      const { status, message } = await response.data;
+                      if (status) {
+                        sonnerToast.success(message);
+                        setQrResponse(undefined);
+                      } else {
+                        sonnerToast.error(message);
+                        setQrResponse(undefined);
+                      }
                     });
                 }}
               >
