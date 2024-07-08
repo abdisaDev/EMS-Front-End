@@ -149,8 +149,8 @@ export default function QrCodeReader() {
                   const { id, ...rest } = qrResponse!;
                   axios
                     .post(
-                      `${import.meta.env.VITE_API_ADDRESS}/${id}/verify-item`,
-                      rest
+                      `${import.meta.env.VITE_API_ADDRESS}/${id}/verify-items`,
+                      rest.items
                     )
                     .then((response) => {
                       console.log(response);
