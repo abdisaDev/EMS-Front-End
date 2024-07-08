@@ -18,6 +18,7 @@ import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { MoveRight } from 'lucide-react';
+import axios from 'axios';
 
 enum Category {
   DEFAULT = '',
@@ -25,6 +26,7 @@ enum Category {
   COMPUTER = 'computer',
 }
 interface qrResponseType {
+  id: string;
   first_name: string;
   last_name: string;
   items: {
@@ -142,9 +144,20 @@ export default function QrCodeReader() {
               <Button
                 size='sm'
                 className='px-6'
+                // disabled={!qrResponse} // uncomment this
                 onClick={() => {
-                  console.log('clicked');
-                  qrResponse && navigate('/verify-user');
+                  const { id, ...rest } = qrResponse!;
+                  axios
+                    .post(
+                      `${import.meta.env.VITE_API_ADDRESS}/${id}/verify-items`,
+                      rest.items
+                    )
+                    .then((response) => {
+                      console.log(response);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
                 }}
               >
                 Verify

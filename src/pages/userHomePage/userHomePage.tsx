@@ -1,6 +1,6 @@
 import WelcomePage from '@/components/welcomePage/welcomePage';
 import { Button } from '@/components/ui/button';
-import { Scan, LockKeyhole, LogOutIcon } from 'lucide-react';
+import { Scan, LogOutIcon } from 'lucide-react';
 
 import {
   Drawer,
@@ -15,7 +15,7 @@ import {
 import QRCode from 'react-qr-code';
 
 // react router
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 import { useState } from 'react';
@@ -36,7 +36,7 @@ export default function UserHomePage() {
   return (
     <div className='h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]'>
       <WelcomePage user={`${localStorage.getItem('name')!}`} />
-      <div className='w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2'>
+      {/* <div className='w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2'>
         <div className='w-10/12 h-10/12 md:space-x-[4%]'>
           <Link to='/verify-user'>
             <Button
@@ -50,7 +50,7 @@ export default function UserHomePage() {
             </Button>
           </Link>
         </div>
-      </div>
+      </div> */}
 
       <Drawer>
         <DrawerTrigger className='w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12'>
@@ -89,9 +89,10 @@ export default function UserHomePage() {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      <div className='w-10/12'>
+
+      <div className='flex justify-center w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12'>
         <Button
-          className='w-full'
+          className='w-10/12'
           variant='destructive'
           onClick={() => {
             localStorage.clear();
