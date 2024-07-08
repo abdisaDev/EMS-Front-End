@@ -32,6 +32,7 @@ import {
 } from 'react-google-recaptcha-v3';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 export default function LoginForm() {
   // const { executeRecaptcha } = useGoogleReCaptcha();
@@ -85,6 +86,14 @@ export default function LoginForm() {
         localStorage.getItem('role') === 'admin'
           ? navigate('/register')
           : navigate('/home');
+      })
+      .then(() => {
+        toast.success('Successfuly Authenticated');
+      })
+      .catch(() => {
+        toast.error('Phone Number or Password Incorrect.', {
+          description: 'Please try again later or contact the admin',
+        });
       });
   };
 

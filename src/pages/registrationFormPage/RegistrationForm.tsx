@@ -131,7 +131,7 @@ export default function RegistrationForm() {
         });
         status < 400 && dispatch(show());
       })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       .catch(async (error) => {
         const { message, statusCode } = await error.response.data;
         toastHandler({
