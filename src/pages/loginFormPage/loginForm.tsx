@@ -33,6 +33,8 @@ import {
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { store } from '@/app/store';
+import { userRole } from './routeSlice';
 
 export default function LoginForm() {
   // const { executeRecaptcha } = useGoogleReCaptcha();
@@ -86,8 +88,7 @@ export default function LoginForm() {
         localStorage.getItem('role') === 'admin'
           ? navigate('/register')
           : navigate('/home');
-      })
-      .then(() => {
+        store.dispatch(userRole(!store.getState().pathChecker.pathChanged));
         toast.success('Successfuly Authenticated');
       })
       .catch(() => {

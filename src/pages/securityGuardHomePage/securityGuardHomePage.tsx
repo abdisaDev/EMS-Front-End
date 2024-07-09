@@ -34,7 +34,7 @@ export default function SecurityGuardHomePage() {
     <div className='h-screen flex flex-col items-center justify-center space-y-2 absolute inset-0 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]'>
       <WelcomePage user={localStorage.getItem('name')!} />
       <div className='w-9/12 sm:w-8/12 md:w-7/12 lg:w-6/12 flex flex-col items-center justify-center space-y-2'>
-        <div className='flex flex-col md:flex-row sm:flex-col space-y-[10px] sm:space-y-[10px] sm:space-y-0 w-10/12 md:space-x-[10px]'>
+        <div className='flex flex-col md:flex-row sm:flex-col space-y-[10px]  sm:space-y-0 w-10/12 md:space-x-[10px]'>
           <div className='w-full '>
             <Link to='/verify-user'>
               <Button variant='outline' className='w-full'>
