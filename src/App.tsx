@@ -1,4 +1,4 @@
-import { routes } from './routes';
+import { defaultRoutes } from './routes';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
@@ -7,13 +7,13 @@ import { useEffect, useState } from 'react';
 import { store } from './app/store';
 
 function App() {
-  console.log('rendered');
-  const [, setIsPathChange] = useState<boolean>(false);
+  const [routes, setRoutes] = useState(defaultRoutes());
+
   const router = createBrowserRouter(routes);
 
   store.subscribe(() => {
-    const { pathChanged } = store.getState().pathChecker;
-    setIsPathChange(pathChanged);
+    store.getState().pathChecker.pathChanged;
+    setRoutes(defaultRoutes(localStorage.getItem('role')));
   });
 
   useEffect(() => {

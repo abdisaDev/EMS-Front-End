@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   pathChanged: false,
+  role: '',
 };
 
 export const pathChecker = createSlice({
@@ -11,9 +12,12 @@ export const pathChecker = createSlice({
     isPathChanged: (state, action) => {
       state.pathChanged = action.payload;
     },
+    userRole: (state, action) => {
+      state.role = action.payload;
+    },
   },
 });
 
-export const { isPathChanged } = pathChecker.actions;
+export const { isPathChanged, userRole } = pathChecker.actions;
 
 export default pathChecker.reducer;
