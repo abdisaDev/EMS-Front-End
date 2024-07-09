@@ -39,8 +39,9 @@ interface qrResponseType {
 export default function QrCodeReader() {
   const [qrResponse, setQrResponse] = useState<qrResponseType>();
 
-  const handleScanQrCode = (response: string) => {
-    if (response.name !== 'NoVideoInputDevicesError' && response) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleScanQrCode = (response: any) => {
+    if (response && response.name !== 'NoVideoInputDevicesError') {
       sonnerToast.success(`QR Read Successfully!`, {
         description: 'Check the detail inforamation before admitting.',
         action: {
