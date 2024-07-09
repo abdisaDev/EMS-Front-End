@@ -3,10 +3,18 @@ import { ThemeProvider } from '@/components/theme/theme-provider';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
 import ErrorPage from './pages/errorPage/errorPage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { store } from './app/store';
 
 function App() {
+  console.log('rendered');
+  const [, setIsPathChange] = useState<boolean>(false);
   const router = createBrowserRouter(routes);
+
+  store.subscribe(() => {
+    const { pathChanged } = store.getState().pathChecker;
+    setIsPathChange(pathChanged);
+  });
 
   useEffect(() => {
     const handleOnline = () => {

@@ -20,7 +20,7 @@ type dailyQuote = {
 export default function WelcomePage(props: { user: string }) {
   const [dailyQuote, setDailyQuote] = useState<dailyQuote>({
     author: 'Abdisa Dev',
-    text: 'Small steps, big journeys.',
+    text: 'Simplicity is a difficult thing to achive.',
   });
   const [allQuotes, setAllquotes] = useState([]);
   const [quoteCounter, setQuoteCounter] = useState(0);

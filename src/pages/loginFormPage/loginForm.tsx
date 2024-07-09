@@ -34,6 +34,9 @@ import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
+import { isPathChanged } from './routeSlice';
+import { store } from '@/app/store';
+
 export default function LoginForm() {
   // const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -86,11 +89,13 @@ export default function LoginForm() {
         localStorage.getItem('role') === 'admin'
           ? navigate('/register')
           : navigate('/home');
-      })
-      .then(() => {
         toast.success('Successfuly Authenticated');
+        store.dispatch(
+          isPathChanged(!store.getState().pathChecker.pathChanged)
+        );
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         toast.error('Phone Number or Password Incorrect.', {
           description: 'Please try again later or contact the admin',
         });
