@@ -40,7 +40,7 @@ export default function QrCodeReader() {
   const [qrResponse, setQrResponse] = useState<qrResponseType>();
 
   const handleScanQrCode = (response: string) => {
-    if (response) {
+    if (response.name !== 'NoVideoInputDevicesError' && response) {
       sonnerToast.success(`QR Read Successfully!`, {
         description: 'Check the detail inforamation before admitting.',
         action: {
@@ -75,37 +75,44 @@ export default function QrCodeReader() {
                 <AlertTitle>
                   {`${qrResponse.first_name} ${qrResponse.last_name}'s Item Lists`}{' '}
                 </AlertTitle>
-                {qrResponse.items.map((item) => {
-                  return (
-                    <AlertDescription className='flex flex-col gap-2 '>
-                      <div className='flex justify-around border py-[10px] rounded-lg'>
-                        <div>Model</div>
-                        <MoveRight />
-                        <div>{item.model}</div>
-                      </div>
-                      <div className='flex justify-around border py-[10px] rounded-lg'>
-                        <div>Serial Number</div>
-                        <MoveRight />
-                        <div>{item.serial_number}</div>
-                      </div>
-                      <div className='flex justify-around border py-[10px] rounded-lg'>
-                        <div>Color</div>
-                        <MoveRight />
-                        <div>{item.color}</div>
-                      </div>
-                      <div className='flex justify-around border py-[10px] rounded-lg'>
-                        <div>Category</div>
-                        <MoveRight />
-                        <div>{item.category}</div>
-                      </div>
-                      <div className='flex justify-around border py-[10px] rounded-lg'>
-                        <div>Description</div>
-                        <MoveRight />
-                        <div>{item.description}</div>
-                      </div>
-                    </AlertDescription>
-                  );
-                })}
+
+                {qrResponse ? (
+                  qrResponse.items.map((item) => {
+                    return (
+                      <AlertDescription className='flex flex-col gap-2 '>
+                        <div className='flex justify-around border py-[10px] rounded-lg'>
+                          <div>Model</div>
+                          <MoveRight />
+                          <div>{item.model}</div>
+                        </div>
+                        <div className='flex justify-around border py-[10px] rounded-lg'>
+                          <div>Serial Number</div>
+                          <MoveRight />
+                          <div>{item.serial_number}</div>
+                        </div>
+                        <div className='flex justify-around border py-[10px] rounded-lg'>
+                          <div>Color</div>
+                          <MoveRight />
+                          <div>{item.color}</div>
+                        </div>
+                        <div className='flex justify-around border py-[10px] rounded-lg'>
+                          <div>Category</div>
+                          <MoveRight />
+                          <div>{item.category}</div>
+                        </div>
+                        <div className='flex justify-around border py-[10px] rounded-lg'>
+                          <div>Description</div>
+                          <MoveRight />
+                          <div>{item.description}</div>
+                        </div>
+                      </AlertDescription>
+                    );
+                  })
+                ) : (
+                  <div className='flex justify-center border py-[10px] rounded-lg'>
+                    <div>There is no registered item.</div>
+                  </div>
+                )}
               </Alert>
             )}
             {!qrResponse && (
