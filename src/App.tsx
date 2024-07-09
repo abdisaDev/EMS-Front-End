@@ -1,12 +1,20 @@
-import { routes } from './routes';
+import { defaultRoutes } from './routes';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
 import ErrorPage from './pages/errorPage/errorPage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { store } from './app/store';
 
 function App() {
+  const [routes, setRoutes] = useState(defaultRoutes());
+
   const router = createBrowserRouter(routes);
+
+  store.subscribe(() => {
+    store.getState().pathChecker.pathChanged;
+    setRoutes(defaultRoutes(localStorage.getItem('role')));
+  });
 
   useEffect(() => {
     const handleOnline = () => {

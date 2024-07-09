@@ -1,9 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import showOtpDialogReducer from "@/components/otpDialog/showOtpSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import showOtpDialogReducer from '@/components/otpDialog/showOtpSlice';
+import pathCheckerReducer from '@/pages/loginFormPage/routeSlice';
 
 export const store = configureStore({
   reducer: {
     showOtpDialog: showOtpDialogReducer,
+    pathChecker: pathCheckerReducer,
   },
 });
 
